@@ -1,0 +1,120 @@
+#yoga-content,
+#yoga-img{
+    height: 100vh;
+}
+
+#yoga-img-scroll,
+#thumb-yoga-content{
+    height: 50%;
+}
+
+#thumb-scroll,
+#yoga-small-content{
+    height: 50%;
+}
+
+
+.yoga-title{
+    font-size: 3rem;
+    font-weight: 600;    
+    border-bottom: 2px solid #0c0c0c;
+}
+
+.yoga-content h2{
+    text-transform: capitalize;
+    color: #12263a;
+    padding-bottom: 0.6rem;
+}
+.yoga-detail p{
+    font-size: 1rem;
+    padding: 0.3rem;
+    opacity: 0.8;
+}
+
+img {
+    max-width: 100%;
+}
+
+.mySlides {
+    display: none;
+}
+
+.cursor {
+    cursor: pointer;
+}
+
+.prev,.next {
+    cursor: pointer;
+    position: absolute;
+    top: 40%;
+    width: auto;
+    padding: 16px;
+    margin-top: -50px;
+    background-color: #f2f2f2;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev:hover,
+.next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.caption-container {
+    text-align: center;
+    background-color: white;
+    margin-top: 10px;
+    padding: 5px 16px;
+    color: black;
+}
+
+.slider-wrap{
+    border: 1px solid rgb(197, 197, 197) !important;
+}
+
+.thum-slider{
+    left: 0 ;
+    bottom: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+/* Add a transparency effect for thumnbail images */
+.demo {
+    opacity: 0.8;
+}
+
+.active,
+.demo:hover {
+    opacity: 1;
+}
+
+@media screen and (min-width: 992px){
+    .card{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 1.5rem;
+    }
+    .card-wrapper{
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .yoga-imgs{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .yoga-content{
+        padding-top: 0;
+    }
+}

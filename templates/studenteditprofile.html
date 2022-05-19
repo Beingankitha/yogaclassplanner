@@ -1,0 +1,124 @@
+{% extends 'studentbase.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% include 'messages.html' %}
+<script>
+setTimeout(function(){
+    if($('#msg').length>0)
+    {
+        $('#msg').remove();
+    }
+},2000)
+</script>
+
+
+<div class="container-fluid">
+    <form action="save_profile" method="post">{% csrf_token %}
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-2"><h1><strong>Edit Profile</strong></h1></div>
+                        <div class="form-group">
+                            <label>E-mail ID</label><br>
+                            <input type="email" class="form-control" name="email" id="email" value="{{user.email}}" readonly/><br>
+                            <span id="emailMsg"></span>
+                            <label>Full Name</label><br>
+                            <input type="text" class="form-control" value="{{user.fullname}}" name="fullname" id="fullname" required="required" ><br>
+                            <span id="fnmMsg"></span>
+                            <label>Your gender</label><br>
+                            <select class="form-control" name="gender" id="gender">
+                                <option value="" selected disabled hidden>{{user.gender}}</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select><br>
+                            <label>Any Underlying Health Condition</label><br>
+                            <input type="radio" name="chk" id="chkYes" value="{{user.is_health}}" onclick="ShowHideDiv()" {% if user.is_health != "no" %} checked {% endif %}> Yes &nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="chk" id="chkNo" value="{{user.is_health}}" onclick="ShowHideDiv()" {% if user.is_health != "yes" %} checked {% endif %}> No<br><br>
+                            <div id="dvtext" {% if user.is_health != "no" %} style="display: block;" {% endif %}>
+                                <label>Your Underlying Health Condition (Write N/A if selected No in above field)</label><br>
+                                <input type="text" class="form-control" placeholder="Enter your Health Detail.." name="txtBox" id="txtBox" value="{{user.health_info}}"/><br>
+                            </div>
+
+                            <label for="first_line">Address</label>
+                            <input type="text" class="form-control" id="fulladd" name="fulladd" value="{{user.address}}" readonly><br>
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6" style="border-left: 1px solid rgb(197, 197, 197) !important;">
+            <div class="card">
+                <div class="card-body">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="input">Your Postcode</label>
+                                <input class="form-control" type="text" id="input" value="{{postcode}}"><br>
+                                <button id="button" class="btn mt-3">Lookup Address</button>
+                            </div>
+                            <div id="lookup_field" class="form-group"></div>
+                            <div class="form-group">
+                                <label for="first_line">Address Line One</label>
+                                <input type="text" class="form-control" id="first_line" name="first_line" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="second_line">Address Line Two</label>
+                                <input type="text" class="form-control" id="second_line" name="second_line" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="third_line">Address Line Three</label>
+                                <input type="text" class="form-control" id="third_line" name="third_line" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="post_town">Post Town</label>
+                                <input type="text" class="form-control" id="post_town" name="post_town" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="postcode">Postcode</label>
+                                <input type="text" class="form-control" id="postcode" name="postcode" readonly>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            
+        </div>
+        <div class="col-md-4 mb-5 pb-5">
+        <button type="submit" class="form-control btn ">Update</button>
+        </div>
+    </form>
+    <div class="col-md-4">
+        
+    </div>
+    <div class="col-md-4">
+        <a href="/studentprofile"><button type="submit" class="form-control btn">Back</button></a>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@ideal-postcodes/postcode-lookup-bundled@2"></script>
+<script>
+
+    IdealPostcodes.PostcodeLookup.setup({
+        apiKey: "ak_l2nv8h6m6arVZiyqXaDOYcUTBROIe",
+        context: '#lookup_field',
+        button: '#button',
+        input: '#input',
+        selectClass: 'form-control',
+        outputFields: {
+            line_1: '#first_line',  
+            line_2: '#second_line',         
+            line_3: '#third_line',
+            post_town: '#post_town',
+            postcode: '#postcode'
+        },
+    });
+</script>
+
+
+{% endblock content%}

@@ -1,0 +1,103 @@
+{% extends 'studentbase.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+<style>
+
+.yoga-detail p{
+    font-size: 17px;
+}
+.container{
+    height:100%;
+}
+.container > .row{ border-bottom:1px solid lightgrey;height:50%; }
+.container > .row > .col-md-6 > .row{ border-bottom:1px solid red;min-height:50%; }
+
+</style>
+
+<!--<div class="container" style="height:100%;">
+    <div class="row " style="height:10%;border-bottom: 1px solid lightgrey;">
+        <div class="col-md-6 text-left">
+            <p><b>{{class_obj.title}}</b>
+            Tutor By {{class_obj.owner}}</p>
+            
+        </div>
+        <div class="col-md-6 text-right">
+            <a href="" class="btn btn-success" style="float:right; margin:7px;"> Book</a>
+            
+        </div>
+    </div>    
+
+    <div class="row" style="height:40%; border-bottom: 1px solid lightgrey;">
+        <div class="col-md-6">
+            <div class = "yoga-content">
+                <h2 class = "">{{class_obj.title}}</h2>
+                <h4>Given By {{class_obj.owner}}</h4>
+                <p><b>Start Date and Time: </b><span>{{class_obj.start_time}}</span></p>
+                <p><b>End Date and Time: </b><span>{{class_obj.start_time}}</span></p>
+                <h2>Description: </h2>
+                <p>{{class_obj.description }}</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="container">
+                <img class="col-md-4 rounded" src = "{{ class_obj.image_thumbnail.url }}"  style="margin:10px;">
+            </div>
+        <div>
+    </div>-->
+
+<div class="container">
+    <div class="row " style="padding-left:10px;height:10%;border-bottom: 1px solid lightgrey;">
+        <div class="col-md-6 text-left">
+            <h4><b>{{class_obj.title}}</b></h4>
+                <h4>Given By {{class_obj.owner}}</h4>
+            
+        </div>
+        <div class="col-md-6 text-right">
+            {% if booked == "booked" %}
+
+            <a href="{% url 'classbooked' class_obj.id %}" class="btn btn-success" style="float:right; margin:7px;"> Cancel Booking</a>
+
+            {% else  %}
+
+            <a href="{% url 'classbooked' class_obj.id %}" class="btn btn-success" style="float:right; margin:7px;"> Book</a>
+
+            {% endif %}
+
+            
+        </div>
+    </div>   
+    <div class="row">
+        <div class="col-md-6">
+            <div class = "" style="margin:10px">
+                <p><b>Start Date and Time: </b><span>{{class_obj.start_time}}</span></p>
+                <p><b>End Date and Time: </b><span>{{class_obj.start_time}}</span></p>
+                <h2>Description: </h2>
+                <p style="overflow-y:scroll; height:200px">{{class_obj.description }}</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <img class="" src = "{{ class_obj.image_thumbnail.url }}"  style="object-fit:contain; height:300px;weight:400px;float:right;margin:10px;">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="container">
+            {% if class_obj.asanasequence %}
+
+
+
+
+            {% else %}
+
+            <p> Yoga Sequences For this class had yet to be add</p>
+
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

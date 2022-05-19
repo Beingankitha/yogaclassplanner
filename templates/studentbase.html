@@ -1,0 +1,103 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Student Dashboard</title>
+  {% block meta %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% endblock %}
+  <link rel="icon" href="{% static 'images/logo/favicon.ico' %}" type="image/ico" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="{% static 'js/student.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/studentdash.css' %}" />
+  
+  <style>
+
+
+
+  </style>
+</head>
+<body>
+
+
+{% block sidenav %}
+
+
+<div class="sidebar">
+        <h2><a href="/studentdash"><img src="{% static 'images/logo/logo1.png' %}" alt="Logo" title="Logo" style="height: 70px; "></a></h2>
+        <ul class="nav nav-pills nav-stacked">
+          <li class=""><a href="/studentdash">Student Dashboard</a></li>
+          <li><a href="/studentprofile">Student Profile</a></li>
+          <li><a href="/yogadictionary/">Yoga Dictionary</a></li>
+          <li><a href="/studentclasses">Class Timetable</a></li>
+          <li><a href="/studentbookclass">Book a class</a></li>
+          <li><a href="/logout1">Logout</a></li>
+        </ul><br>
+      </div>
+</div>
+
+{% endblock sidenav%}
+
+<div class="content">
+
+  {% block content %}
+        
+  {% endblock content %}
+  
+</div>
+
+<!--<nav class="navbar navbar-inverse visible-xs">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#"><img src="{% static 'images/logo/logo1.png' %}" alt="Logo" title="Logo" style="height: 70px;"></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="current"><a href="#">Student Dashboard</a></li>
+        <li><a href="/studentprofile">Student Profile</a></li>
+        <li><a href="/yogadictionary/">Pose Dictionary</a></li>
+        <li><a href="/studentclasses">Class Timetable</a></li>
+        <li><a href="/studentbookclass">Booak a class</a></li>
+        <li><a href="logout1">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-lg-2 sidenav hidden-xs" style="height: 100vh; position: sticky;">
+      <h2><a href="/studentdash"><img src="{% static 'images/logo/logo1.png' %}" alt="Logo" title="Logo" style="height: 70px;"></a></h2>
+      <ul class="nav nav-pills nav-stacked">
+        <li class=""><a href="/studentdash">Student Dashboard</a></li>
+        <li><a href="/studentprofile">Student Profile</a></li>
+        <li><a href="/yogadictionary/">Yoga Dictionary</a></li>
+        <li><a href="/studentclasses">Class Timetable</a></li>
+        <li><a href="/studentbookclass">Booak a class</a></li>
+        <li><a href="/logout1">Logout</a></li>
+      </ul><br>
+    </div>
+  <div>
+</div>-->
+
+
+<script>
+  setTimeout(function(){
+      if($('#msg').length>0)
+      {
+          $('#msg').remove();
+      }
+  },2000)
+</script>
+
+</body>
+</html>

@@ -1,0 +1,153 @@
+{% extends 'teacherbase.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/file-upload-with-preview/dist/file-upload-with-preview.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js"></script>
+ 
+
+
+<style>
+
+
+
+#img-upload{
+    color:white;
+    font-weight:bold;
+    background: #28a745;
+}
+
+textarea
+{   
+    white-space: pre-wrap;
+    overflow-y:scroll;
+}
+
+</style>
+
+{% include 'messages.html' %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+                    <div class="row"><a href="/teacher/yogadictionary" class="mx-2" style="color:blue !important;"> Back </a><h1 class="col-10"><center>Add Yoga Asana</center></h1></div>
+                    <div class="">
+                    
+
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="frm" enctype="multipart/form-data" method="POST">{% csrf_token %} 
+                                <div class="form-group">
+                                    <label>Yoga Asana Name</label><br>
+                                    <input type="text" class="form-control" name="yoga_name" value="{{asana.asana_name}}" readonly/><br>
+                                    <label>Yoga Asana Sanskrut Name</label><br>
+                                    <input type="text" class="form-control" value="{{asana.asana_sanscrut_name}}" name="yoga_sanskrut_name" id="yoga_sanskrut_name" readonly ><br>
+                                    <label>Yoga Asana Pose Name</label><br>
+                                    <input type="text" class="form-control" value="{{asana.asana_english_name}}" name="yoga_pose_name" id="yoga_pose_name" required="required" ><br>
+                                    <label>Select Yoga Asana Category </label><br>
+                                    <select class="form-control" name="yoga_pos" id="yoga_pos">
+                                        <option selected>{{asana.asana_position}}</option>
+                                        {% for p in position %}
+                                        <option value="{{p.position_name}}" >{{p.position_name}}</option>
+                                        {% endfor %}
+                                    </select><br>
+                                    <label>Select Yoga Asana Postion SubCategory</label><br>
+                                    <select class="form-control" name="yoga_typ" id="yoga_typ">
+                                        <option selected>{{asana.asana_type}}</option>
+                                        {% for t in type %}
+                                        <option value="{{t.type_name}}">{{t.type_name}}</option>
+                                        {% endfor %}
+                                    </select><br>
+                                    <label>Select Yoga Asana Difficulty Level </label><br>
+                                    <select class="form-control" name="yoga_lev" id="yoga_lev">
+                                        <option selected>{{asana.asana_difficulty}}</option>
+                                        {% for l in level %}
+                                        <option value="{{l.difficulty_name}}">{{l.difficulty_name}}</option>
+                                        {% endfor %}
+                                    </select><br>
+                                    <label>Yoga Asana Description along with its variation details </label><br>
+                                    <textarea class="form-control" name="yoga_desc" id="yoga_desc" rows="9" value="" required="required">  &#13;&#10; {{ asana.how_to_do | safe }} </textarea><br/>
+                            
+                                    <label>Yoga Asana Benifit along with body muscles it affects </label><br>
+                                    <textarea class="form-control" name="yoga_benifit" id="yoga_benifit" value="" rows="3" required="required">{{asana.benifit | safe }}</textarea><br/>
+                                    <label>Yoga Asana Cautions about with person who have health problems avoid it.</label><br>
+                                    <textarea class="form-control" name="yoga_caution" id="yoga_caution" value="{{asana.caution}}" rows="2" required="required"> {{asana.caution | safe }}</textarea><br/>
+                                    <label>Yoga Asana Starting Postion </label><br>
+                                    <input type="text" class="form-control" name="yoga_start_pos" id="yoga_start_pos" value="{{asana.start_position}}" required="required"/><br>
+                                    <label>Yoga Asana Concentration </label><br>
+                                    <input type="text" class="form-control" name="yoga_conc" id="yoga_conc" value="{{asana.concentration}}" required="required"/><br>
+                                    <label>Yoga Asana Breathing info while doing asana </label><br>
+                                    <input type="text" class="form-control" name="yoga_breath" id="yoga_breath" value="{{asana.breath}}" required="required"/><br>
+                                    <label>Yoga Asana Repeatation </label><br>
+                                    <input type="text" class="form-control" name="yoga_rept" id="yoga_rept" value="{{asana.repetitions}}" required="required"/><br>
+                                    <div style="border-top: 2px solid rgb(197, 197, 197) !important;border-bottom: 2px solid rgb(197, 197, 197) !important; padding-bottom:10px;">
+                                        <h6 id="img-upload">Yoga Asana Image upload</h6>
+                                        
+
+                                        {% for img in yoga_images %}
+
+                                        <div class="row" id="display_images">
+                                            <div class="col-6"><img src="{{ img.images.url }}" style="height:400px;width:400px; margin:10px;"></div>
+                                            <div class="col-6"><p class="file-upload form-control" style="margin:10px;">Currently: <a href="{{ img.images.url }}" style="color:blue !important;">{{ img.images.url }}</a><br>
+                                                Change:
+                                            <input type="file" name="inputFile{{ forloop.counter }}" accept="image/*" ></p></div>
+
+                                        </div>
+
+                                        {% endfor %}
+
+                                        
+                                    </div>
+                                    
+                                    <a href="{% url 'edit_data' id=asana.id %}" ><input type="Submit" id="" value="Submit" class="btn btn-success" onSubmit=""></a>
+                            <form>
+                            
+                        </div>
+                    </div>
+                    
+                    </div>
+                
+        <div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+            <div class="col-12">
+                
+            </div>
+    </div>
+</div>
+
+<script>
+
+function onFormSubmit(event){
+
+    event.preventDefault();
+    
+    var formdata = new FormData();
+    var inputfile = [];
+    
+    inputfile = document.getElementsByName("inputFiles[]")
+
+    for (let i = 0; i < inputfile.length; i++) {
+        formdata.append("file"+i.toString(), inputfile[i].files[0] );
+    }
+
+   console.log(formdata);
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.open("POST", "http://127.0.0.1:8000/teacher/yogadictionary/edit/Utthita-Lolasana", true);
+
+    xhr.send(formdata);
+
+    
+}
+
+</script>
+
+{% endblock content %}

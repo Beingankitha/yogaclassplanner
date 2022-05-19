@@ -1,0 +1,57 @@
+{% extends 'teacherbase.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <a href="/teachcer/calendar/classlist" class="btn" style="font-size:large;color:blue;">Back</a>
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-2"><h1><strong>View Classes details</strong></h1></div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Class Title:</label>
+                                <input type="text" class="form-control" value="{{ class.title }}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">Class Description:</label>
+                                <textarea cols="40" rows="10" class="form-control" value="" readonly>{{ class.description | safe }}</textarea>
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">Start Date and Time:</label>
+                                <input type="text" value="{{ class.start_time }}" class="form-control" readonly>
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">End Date and Time:</label>
+                                <input type="text" class="form-control" value="{{ class.end_time }}" readonly>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">Numbeer of attendees</label>
+                                <input type="number" class="form-control" value="{{ class.attendee }}" readonly>
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">Class Image</label><br/>
+                                <img src="{{ class.image_thumbnail.url }}" class="img-thumbnail" style="height:300px;width:300px; object-fit:cover;">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>                
+    </div>
+</div>
+
+
+{% endblock content %}
+
+
+

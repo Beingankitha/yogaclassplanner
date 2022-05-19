@@ -1,0 +1,60 @@
+{% extends 'studentbase.html' %}
+
+{% load static %}
+
+{% block content %}  
+
+{% include 'messages.html' %}
+
+<style>
+
+.welcome-container{
+    display: block;
+    margin-top: 15px;
+    padding: 3px;
+    background-color: #8ebf42;
+}
+
+.rest-container{
+    height: 80vh;
+    display: block;
+    margin-top: 15px;
+    padding: 3px;
+    background-color: #fff;
+}
+.name-container{
+    width: 100%;
+    height: 100%;
+    float: right;
+    text-align: right;
+    display: block;
+    margin: 0 auto;
+    padding: 5px;
+    background-color: white;
+}
+
+</style>
+    
+    
+
+<div class="container-fluid">
+    <div class="name-container">Hi, {{ request.session.username }} </div>
+<div class="welcome-container">     
+    <div class="" style=""><center><h1>Welcome To Student Dashboard</h1> </center><div>
+    <div class="rest-container"></div>
+</div>
+</div>    
+    
+
+
+<script>
+    setTimeout(function(){
+        if($('#msg').length>0)
+        {
+            $('#msg').remove();
+        }
+    },2000)
+</script>
+
+{% endblock content %}
+

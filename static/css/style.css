@@ -1,0 +1,248 @@
+/*-- Body Reset --*/
+
+* {
+    box-sizing: border-box;  
+}
+
+html {
+    height: 100vh;
+}
+
+body {
+    overflow-x: hidden;
+    font-family: 'Josefin Sans', sans-serif;
+    /*font-family: 'Montserrat', sans-serif;*/
+    color: black;
+    margin: 0%;
+    padding: 0;
+    height: 100vh;
+  }
+  
+  /*============= TOP BAR HEADER =============*/
+  
+  .top-bar{
+    padding: 3px 2px;
+    border-bottom: 1px solid #e4e2e2;
+    /*background: black;
+    opacity: 0.8;*/
+  }
+  span{
+    padding-right: 5px;
+    color: black;
+    font-size: 14px;
+  }
+  .top-bar span a{
+    color: black;
+  }
+  .top-bar span a:hover{
+    color: #28a745;
+  }
+  
+  /*============= NAVIGATION =============*/
+  .menu-section{
+    align-items: center;
+  }
+  
+  .header{
+    position: sticky;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background-color: white;
+    box-shadow: 0 0.5rem 0.5rem rgba(0,0,0,0.1);
+  }
+
+  .navbar{
+    padding: 2px;
+    border-bottom: 1px solid #e4e2e2;
+    color: black;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.05rem;
+    align-items: center!important;
+    box-shadow: 0 0.5rem 0.5rem rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .navbar a{
+    text-decoration: none;
+    align-items: center;
+  }
+  
+  .navbar a:hover{
+    color: #28a745/* rgb(45, 156, 247)*/!important;
+  }
+  
+  .nav-item{
+    display: flex;
+    align-items: center!important;
+  }
+  
+  .nav-link{
+    align-items: center!important;
+    text-decoration: none;
+    color: black!important;
+    font-size: 14px;
+    
+  }
+  
+  .current{
+    color: #28a745/*rgb(45, 156, 247)*/!important;
+    border-bottom: 2px solid #28a745/*rgb(45, 156, 247);*/;
+  }
+  
+  .menu-btn{
+    border: 2px solid #28a745/*rgb(45, 156, 247)*/;  
+    border-radius: 15px;
+    background: white;
+    width: 100px;
+    height: 40px;
+    align-items: center!important;
+    
+  }
+  
+  .menu-item{
+    align-items: center!important;
+    padding: 8px;
+  }
+  
+  .navbar button:hover{
+    background: #28a745/*rgb(45, 156, 247)*/;
+    color: white;
+  }
+
+  
+  /*============= BANNER =============**/
+
+  .image-banner{
+      position: relative;
+      box-shadow: 0 0.5rem 0.5rem rgba(0,0,0,0.2);
+      z-index: 1;
+  }
+  .centered {
+    border-radius: 1rem;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    position: absolute;
+    display: block;
+    padding: 13px;
+    width: 25%;
+    top: 43%;
+    left: 77%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /*===== who page =====*/
+
+  .who-container {
+    padding: 1rem; 
+    margin-top: 1rem; 
+    height:75vh; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+  }
+
+  /*===== login page =====*/
+
+  .login-container {
+    padding: 1rem; 
+    margin-top: 1rem; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+  }
+  
+  /*===== register page =====*/
+
+  .register-container {
+    padding: 1rem; 
+    margin-top: 1rem; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+  }
+
+  /*===== membership page =====*/
+  
+  .membership-container {
+    padding: 1rem; 
+    margin-top: 1rem; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+  }
+  
+  /*-- Emoji Navbar --*/
+  
+  
+  
+  /*============= FOOTER =============*/
+.cmn-footer {
+    width: 100%; 
+    background: white;
+}
+
+.cmn-footer1 {
+  position: fixed;
+  width: 100%; 
+  background: white;
+}
+  
+  
+  /*============= SOCKET =============*/
+  
+  
+  
+  /*============= MEDIA QUERIES =============*/
+  
+  /* Devices under 1199px (xl) */
+  @media (max-width: 1199.98px) {
+  
+  }
+  /* Devices under 768px (md) */
+  @media (max-width: 767.98px) {
+    
+    .cmn-footer .footer-left,
+    .cmn-footer .footer-center,
+    .cmn-footer .footer-right{
+        display: block;
+        width: 100%;
+        background: white;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .cmn-footer .footer-center i{
+        margin-left: 0;
+    }
+
+  }
+  
+  
+  /*============ BOOTSTRAP BREAK POINTS:
+  
+  Extra small (xs) devices (portrait phones, less than 576px)
+  No media query since this is the default in Bootstrap
+  
+  Small (sm) devices (landscape phones, 576px and up)
+  @media (min-width: 576px) { ... }
+  
+  Medium (md) devices (tablets, 768px and up)
+  @media (min-width: 768px) { ... }
+  
+  Large (lg) devices (desktops, 992px and up)
+  @media (min-width: 992px) { ... }
+  
+  Extra (xl) large devices (large desktops, 1200px and up)
+  @media (min-width: 1200px) { ... }
+  
+  =============*/
+  
+  /*-- Bootstrap Mobile Gutter Fix --*/
+  

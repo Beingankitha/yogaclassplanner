@@ -1,0 +1,39 @@
+{% extends 'teacherbase.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<script>
+
+    setTimeout(function(){
+        if($('#msg').length>0)
+        {
+            $('#msg').remove();
+        }
+    },2000)
+    
+</script>
+
+{% include 'messages.html' %}
+
+<div class="container-fluid">
+    <div class="row">
+        <span id="error"></span>
+        <div class="col-12">
+            <a href="/teachcer/calendar/classlist" class="btn btn-success" style="font-size:large;color:white;">Back</a><br/><br/>
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-2"><h1><strong>Attendee of title `{{data.title}}` Classe is as below</strong></h1></div>
+                    {% for a in attendee %}
+                    <p><a href="{% url 'studentmedsinfo' a.student.id %}" style="color:blue; cursor: pointer;">{{ a.student.fullname | title}}</a></p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>                
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

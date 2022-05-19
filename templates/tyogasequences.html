@@ -1,0 +1,345 @@
+{% extends 'teacherbase.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
+
+<style>
+
+.topnav {
+    background-color: white;
+}
+
+.topnav input {
+    text-decoration: none;
+    background-color: white ;
+    float: left;
+    margin: 5px;
+    display: block;
+    text-align: center;
+    padding: 7px;
+    width: 80px;
+    border: none;
+    font-size: 15px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+}
+
+.topnav button{
+    color:white;
+    font-weight: bold;
+    float: left;
+    margin: 9px;
+    padding: 5px;
+    display: block;
+    text-align: center;
+    background-color: green;
+    width: 50px;
+    border: none;
+    font-size: 15px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+
+#autocomplete{
+    float:right;
+}
+
+#autocomplete input{
+    width: 300px;
+}
+
+@media screen and (max-width: 600px) {
+.topnav .search-container {
+    float: none;
+}
+.topnav select, .topnav .search-container {
+    float: none;
+    display: block;
+    text-align: left;
+    width: 100%;
+    margin: 0;
+    padding: 14px;
+}
+.topnav input[type=text] {
+    border: 1px solid #ccc;  
+}
+}
+
+input.submit {
+    margin: 0;
+    padding: 0;
+    border: none;
+    color: blue;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+.card-img-top {
+    width: 100%;
+    object-fit: cover;
+}
+
+.card{
+    border: 0px !important;
+}
+
+.outer {
+    border:solid 1px #000;
+    height:450px;
+    overflow:scroll;
+    
+}
+
+.leftcol {
+    border:solid 1px red;
+    overflow:scroll;
+}
+
+.rightcol {
+    border:solid 1px red;
+    overflow:scroll;
+    height:450px; /* I WANT THIS BUT DYNAMICALLY CHANGES W/ .OUTER */
+}
+.bootomrow{
+    border:solid 1px red;
+    height:200px;
+}
+
+.grid-container {
+    display: grid;
+    grid-gap: 10px;
+    background-color: white;
+    padding: 05px;
+    grid-auto-rows: 1fr;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .draggable.dragging {
+    opacity: .5;
+  }
+
+</style>
+    
+
+{% include 'messages.html' %}
+
+
+<div class="col row" style="height:40px;float:right">
+    <form>
+        <label>Enter Sequences Name:</label>
+            <input type="text" name ="seq_name" required style="">
+            <input type="button" class="btn btn-success" value="Save">
+    </form>
+</div>
+<div class="fluid-container" style="margin:5px;">
+    
+    <div class="row" >
+        <div class="col-6 outer" >
+            
+            <div class="grid-container droptarget row_data" style="height:85%" >
+                
+            </div>
+            
+        </div>
+        <div class="col-6 rightcol" style="top:0;">
+            <div class="row">
+                <div class="topnav">
+                    <form method="get" action="" id="search_form">
+                        <input list="level" name="level" placeholder="Yoga Levels">
+                        <datalist id="level">
+                            {% for l in level %}
+                            <option value="{{l.difficulty_name}}">
+                            {% endfor %}
+                        </datalist>
+                        <input list="position" name="position" placeholder="Yoga Positions">
+                        <datalist id="position">
+                            {% for p in pos %}
+                            <option value="{{p.position_name}}">
+                            {% endfor %}
+                        </datalist>
+                        <input list="type" name="type" placeholder="Yoga Types">
+                        <datalist id="type">
+                            {% for t in type %}
+                            <option value="{{t.type_name}}">
+                            {% endfor %}
+                        </datalist>
+                        <input list="muscle" name="muscle" placeholder="Benifits on Muscles">
+                        <datalist id="muscle">
+                            <option value="Abdominal">
+                            <option value="Hips">
+                            <option value="Back">
+                            <option value="Thighs">
+                            <option value="Shoulder">
+                            <option value="Neck">
+                            <option value="Pelvic">
+                            <option value="Legs">
+                        </datalist>
+                        <button name="" class="" id="filter_submit" onclick="">Search</button>
+                        <a href="/teacher/yogadictionary/create/yogasequences" name="filter_submit" id="filter_submit" onclick="" style="text-align: center; float: left; margin: 9px; padding: 5px; display: block;"><i class="fa fa-refresh"></i></a>
+                        <a href="/teacher/yogadictionary/addyogaasana" name="filter_submit" id="filter_submit" onclick="" style="text-align: center; float: left; margin: 9px; padding: 5px; display: block;"><i class="fa fa-plus"></i></a> 
+                    </form>
+                </div>
+            </div>
+            <div class="grid-container">
+                {% for asan in asanas %}
+                        <div class="card border-top-0 dragtarget" style=" padding: 05px !important;width:8rem;height:13rem;" id="{{ asan.id }}" draggable="true">
+                            <a href="{% url 'edit_data' slug=asan.slug %}"  class="mx-2"><i class="fa fa-pencil-square-o"></i></a>
+                                <img class="card-img-top "  class="" src = "{{ asan.image_thumbnail.url }}" id="{{ asan.id }}" alt="card image cap" style="object-fit:cover;">
+                                <div class="card-body" style="text-aligh:center;">
+                                    <a id="{{ asan.id }}" class="draggable" value="{{ asan.id }}" href="{% url 'yoga_detail' asan.slug %}" draggable="true">
+                                    <center><h6 >{{ asan.asana_name }}</h6></center>
+                                    </a>
+                                </div>
+                        </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class=""><b>Automatic Suggestions:</b></div>
+    <div class="row" id="demo" style="border:solid 1px blue;height:200px;">
+        nbvcgfrtyukjmn
+    </div>
+</div>
+
+<script>
+
+
+    var selectedData = new Array();
+
+
+    document.addEventListener("dragstart", function(event) {
+        // The dataTransfer.setData() method sets the data type and the value of the dragged data
+        event.dataTransfer.setData("Text", event.target.id);
+        console.log(event.target.id);
+        selectedData.push(event.target.id);
+        console.log(selectedData);
+        // Output some text when starting to drag the p element
+        document.getElementById("demo").innerHTML = "Started to drag the p element.";
+        
+        // Change the opacity of the draggable element
+        event.target.style.opacity = "0.4";
+      });
+      
+      // While dragging the p element, change the color of the output text
+      document.addEventListener("drag", function(event) {
+        
+      });
+      
+      // Output some text when finished dragging the p element and reset the opacity
+      document.addEventListener("dragend", function(event) {
+        
+        event.target.style.opacity = "1";
+      });
+      
+      /* Events fired on the drop target */
+      
+      // When the draggable p element enters the droptarget, change the DIVS's border style
+      document.addEventListener("dragenter", function(event) {
+        if ( event.target.className == "droptarget" ) {
+          event.target.style.border = "3px dotted red";
+        }
+      });
+      
+      // By default, data/elements cannot be dropped in other elements. To allow a drop, we must prevent the default handling of the element
+      document.addEventListener("dragover", function(event) {
+        event.preventDefault();
+      });
+      
+      // When the draggable p element leaves the droptarget, reset the DIVS's border style
+      document.addEventListener("dragleave", function(event) {
+        if ( event.target.className == "droptarget" ) {
+          event.target.style.border = "";
+        }
+      });
+      
+      /* On drop - Prevent the browser default handling of the data (default is open as link on drop)
+         Reset the color of the output text and DIV's border color
+         Get the dragged data with the dataTransfer.getData() method
+         The dragged data is the id of the dragged element ("drag1")
+         Append the dragged element into the drop element
+      */
+      document.addEventListener("drop", function(event) {
+        event.preventDefault();
+        if ( event.target.className == "droptarget" ) {
+          document.getElementById("demo").style.color = "";
+          event.target.style.border = "";
+          var data = event.dataTransfer.getData("Text");
+          event.target.appendChild(document.getElementById(data));
+        }
+      });
+
+
+
+
+
+
+
+
+const draggables = document.querySelectorAll('.dragtarget')
+const containers = document.querySelectorAll('.droptarget')
+
+draggables.forEach(draggable => {
+  draggable.addEventListener('dragstart', () => {
+    draggable.classList.add('dragging')
+  })
+
+  draggable.addEventListener('dragend', () => {
+    console.log()
+    draggable.classList.remove('dragging')
+  })
+})
+
+containers.forEach(container => {
+  container.addEventListener('dragover', e => {
+    e.preventDefault()
+    const afterElement = getDragAfterElement(container, e.clientY)
+    const draggable = document.querySelector('.dragging')
+    if (afterElement == null) {
+      container.appendChild(draggable)
+      //selectedData.push((draggable).attr("id"))
+      console.log(selectedData)
+    } else {
+      container.insertBefore(draggable, afterElement)
+    }
+  })
+})
+
+function getDragAfterElement(container, y) {
+  const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
+
+  return draggableElements.reduce((closest, child) => {
+    const box = child.getBoundingClientRect()
+    const offset = y - box.top - box.height / 2
+    if (offset < 0 && offset > closest.offset) {
+      return { offset: offset, element: child }
+    } else {
+      return closest
+    }
+  }, 
+
+
+
+  function onDragEnd(e) { e.currentTarget.style.backgroundColor = '#4AAE9B' },
+  { offset: Number.NEGATIVE_INFINITY }).element
+}  
+
+
+/*$('card img').draggable({
+    revert:false,
+    helper:'clone',
+    
+})
+
+$("#row_data").droppable({
+    drop: function (event, img) {
+        this.value = $(img.draggable).attr('id');
+    }
+});*/
+
+</script>
+
+{% endblock content %}
+

@@ -1,0 +1,82 @@
+{% extends 'teacherbase.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
+
+<style>
+
+
+</style>
+    
+
+{% include 'messages.html' %}
+
+
+<div class="col row" style="height:40px;float:right">
+    <form>
+        <label>Select if you want to create Sequences based on your choosen data. </label><br/><br>
+        <form method="get" action="" id="search_form">
+            <br/><label>Yoga Levels</label>
+            <input list="level" class="form-control" name="level" placeholder="Yoga Levels">
+            <datalist id="level">
+                {% for l in level %}
+                <option value="{{l.difficulty_name}}">
+                {% endfor %}
+            </datalist>
+            <br/><label>Yoga Positions</label>
+            <input list="position" class="form-control" name="position" placeholder="Yoga Positions">
+            <datalist id="position">
+                {% for p in pos %}
+                <option value="{{p.position_name}}">
+                {% endfor %}
+            </datalist>
+            <br/><label>Yoga Types</label>
+            <input list="type" name="type" class="form-control" placeholder="Yoga Types">
+            <datalist id="type">
+                {% for t in type %}
+                <option value="{{t.type_name}}">
+                {% endfor %}
+            </datalist>
+            <br/><label>Benifits on Muscles</label>
+            <input list="muscle" name="muscle" class="form-control" placeholder="Benifits on Muscles">
+            <datalist id="muscle">
+                <option value="Abdominal">
+                <option value="Hips">
+                <option value="Back">
+                <option value="Thighs">
+                <option value="Shoulder">
+                <option value="Neck">
+                <option value="Pelvic">
+                <option value="Legs">
+            </datalist>
+        
+
+        <br/><label>Select yoga class name from drop down, create Sequences based on attendee students of that class. </label>
+            <small>(optional)</small>
+            <select name="yogaclass_name" class="form-control">
+                <option value="" selected disabled>Select here ...</option>
+            {% for y in yogaclass %}
+                {% if y.title %}
+                <option value="{{y.title}}">{{y.title}}</option>
+                {% else %}
+
+
+                {% endif %}
+            {% endfor %}
+        </select>
+        <br/>  
+        <input type="button" class="btn btn-success" value="Next">
+
+
+    </form>
+</div>
+
+<script>
+
+</script>
+
+{% endblock content %}
+

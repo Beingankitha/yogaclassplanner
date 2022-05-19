@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+<!-- Image banner -->
+
+{% block content %}
+
+    <div class="image-banner">
+        <img src="{% static 'images/banner/12.jpg' %}" class="w-100" style="height: auto; "/>
+        <div class="centered">
+            <div class="bg-custom d-none d-md-block py-3 px-0">
+                <h1 class="">Yoga Class Planner</h1>
+                <div class="border-top border-success w-100 mx-auto my-3"></div>
+                    <h5 class="pb-3">"Inhale the future, exhale the past."</h5>
+                    <form action="membership" method="post">{% csrf_token %}
+                    <input name="email" placeholder="Enter your email*" class="form-control " value="" pattern='(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))' required/>
+                    <br/>
+                    <button type="submit" class="form-control btn-success btn-lg" value="">START YOUR FREE TRIAL</button>
+                    </form>
+                    
+            </div>
+        </div>
+    </div>
+
+    
+	<!-- End Image banner -->
+
+
+	<!-- Main Page Heading -->
+
+    <div class="col-12 text-center mt-5">
+        <h1 class="text-dark pt-4">Yoga Classes We Offer</h1>
+        <div class="border-top border-primary w-25 mx-auto my-3"></div>
+        <p class="lead">Shape your body with degital wellbeing</p>
+    </div>
+
+	<!-- Three Column Section -->
+
+    <div class="container">
+        <div class="row my-5">
+            <div class="col-md-4 my-4">
+                
+            </div>
+        </div>
+    </div>
+
+	
+
+    {% endblock content%}
+

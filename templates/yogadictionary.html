@@ -1,0 +1,287 @@
+{% extends 'studentbase.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@trevoreyre/autocomplete-js/dist/style.css" />
+
+
+<style>
+
+.topnav {
+  background-color: white;
+}
+
+.topnav i {
+  text-decoration: none;
+  background-color: white !important ;
+  float: left;
+  margin: 10px;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 7px;
+  border: none;
+  height: 10px; 
+  cursor: pointer; 
+}
+
+.topnav input {
+  text-decoration: none;
+  background-color: white ;
+  float: left;
+  margin: 5px;
+  display: block;
+  text-align: center;
+  padding: 7px;
+  width: 175px;
+  border: none;
+  font-size: 15px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+}
+
+.topnav button{
+  color:white;
+  font-weight: bold;
+  float: left;
+  margin: 9px;
+  padding: 5px;
+  display: block;
+  text-align: center;
+  background-color: green;
+  width: 100px;
+  border: none;
+  font-size: 15px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+}
+
+
+
+#autocomplete{
+  float:right;
+}
+
+#autocomplete input{
+  width: 300px;
+}
+
+@media screen and (max-width: 600px) {
+  .topnav .search-container {
+    float: none;
+  }
+  .topnav select, .topnav .search-container {
+    float: none;
+    display: block;
+    text-align: left;
+    width: 100%;
+    margin: 0;
+    padding: 14px;
+  }
+  .topnav input[type=text] {
+    border: 1px solid #ccc;  
+  }
+}
+
+input.submit {
+  margin: 0;
+  padding: 0;
+  border: none;
+  color: blue;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+
+</style>
+    
+
+{% include 'messages.html' %}
+
+
+
+
+<div class="container-fluid">
+  <div class="col-md-12 topnav">
+    <form method="get" action="" id="search_form">
+      <input list="level" name="level" placeholder="Yoga Levels">
+      <datalist id="level">
+        {% for l in level %}
+        <option value="{{l.difficulty_name}}">
+        {% endfor %}
+      </datalist>
+      <input list="position" name="position" placeholder="Yoga Positions">
+      <datalist id="position">
+        {% for p in pos %}
+        <option value="{{p.position_name}}">
+        {% endfor %}
+      </datalist>
+      <input list="type" name="type" placeholder="Yoga Types">
+      <datalist id="type">
+        {% for t in type %}
+        <option value="{{t.type_name}}">
+        {% endfor %}
+      </datalist>
+      <input list="muscle" name="muscle" placeholder="Benifits on Muscles">
+      <datalist id="muscle">
+        <option value="Abdominal">
+        <option value="Hips">
+        <option value="Back">
+        <option value="Thighs">
+        <option value="Shoulder">
+        <option value="Neck">
+        <option value="Pelvic">
+        <option value="Legs">
+      </datalist>
+      <button name="" class="" id="filter_submit" onclick="">Search</button>
+      <a href="/yogadictionary/" name="filter_submit" id="filter_submit" onclick=""><i class="fa fa-refresh" aria-hidden="true"></i></a>
+      <div id="autocomplete" class="autocomplete">
+        <input class="autocomplete-input" placeholder="Search asana">
+        <ul class="autocomplete-result-list"></ul>
+      </div>
+    </form>
+      
+  </div>
+        
+  {% if asanas %}
+  
+  <section>
+    <div class="container">
+      <div class="yogamain">
+        <div class="row">
+          {% for asan in asanas %}
+            <form methon="post" action="yogaasan_detail" asana_id="asan.id">
+              <div class="col-md-3">
+                <div class="card">
+                  <img class="" src = "{{ asan.image_thumbnail.url }}" alt="card image cap" style="object-fit:contain; width:200px; height:200px; border: 1px #CCC">
+                  <div class="card-body">
+                    <a id="{{ asan.id }}" value="{{ asan.id }}" href="{% url 'yogaasan_detail' slug=asan.slug %}">
+                    <h4>{{ asan.asana_name }}</h4>
+                    <p>{{ asan.asana_sanscrut_name }}</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </form>
+          {% endfor %}
+        </div>
+      </div> 
+    <div>
+
+      <footer class="container-fluid yoga-footer" style="margin-top:15px;">
+        <div class="center-block my-2">
+          <ul class="pagination text-center">
+            {% for i in paginator.page_range %}
+              <li class="page-item {% if i == page_number %} active {% endif %}">
+                <a class="page-link" onclick="return buildURL(this)" href="?page={{ i }}">{{i}}</a>
+              </li>
+              {% endfor %}
+          </ul>
+        <div>  
+      </footer>
+
+
+  </section><br />
+
+  {% else %}
+
+  <div class="container-fluid" style="margin:100px; padding:10px; text-align:center;">
+    <h3>No Search Result Found.</h3>
+  </div>
+  {% endif %}
+  
+
+</div>
+
+
+
+<script>
+
+  
+
+  setTimeout(function(){
+      if($('#msg').length>0)
+      {
+          $('#msg').remove();
+      }
+  },2000)
+
+  new Autocomplete('#autocomplete', {
+    search : input =>{
+      console.log(input)
+      const url = `/search/?asananame=${input}`
+      return new Promise(resolve =>{
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+          resolve(data.data)
+        })
+      })
+    },
+    onSubmit : result => {
+      window.open(`/yogadictionary/${result}/`)
+    }
+  })
+
+  /*$("#search_form").submit(function(e) {
+    e.preventDefault();
+  });
+
+
+  function myfunction(){
+
+  $(document).ready(function(){
+
+    var lev = $('[name="level"]').val();
+    var pos = $('[name="position"]').val();
+    var typ = $('[name="type"]').val();
+    var mus = $('[name="muscle"]').val();
+
+    console.log(lev);
+    console.log(pos);
+    console.log(typ);
+    console.log(mus);
+
+    $.ajax({
+        type: 'post',
+        url: '/yogadictionary/',
+        headers: {'Authorization': "Token " + localStorage.access_token},
+        data: { 'level': lev, 'position':pos, 'type':typ, 'muscle':mus, 'csrfmiddlewaretoken': '{{ csrf_token }}', },
+        success: function(result) {
+          console.log('Data Has been saved')
+        }
+    });
+
+
+    });
+
+  }*/
+
+
+  /*AJAX to form submit by selecting datalist options */
+
+  /*document.querySelectorAll('input[list]').forEach( function (formfield) {
+    var datalist = document.getElementById(formfield.getAttribute('list'));
+    var lastlength = formfield.value.length;
+    var checkInputValue = function (inputValue) {
+      if (inputValue.length - lastlength > 1) {
+        datalist.querySelectorAll('option').forEach( function (item) {
+          if (item.value === inputValue) {
+            formfield.form.submit();
+          }
+        });
+      }
+      lastlength = inputValue.length;
+    };
+    formfield.addEventListener('input', function () {
+      checkInputValue(this.value);
+    }, false);
+  });*/
+
+</script>
+
+{% endblock content %}
+

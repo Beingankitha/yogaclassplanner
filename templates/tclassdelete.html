@@ -1,0 +1,42 @@
+{% extends 'teacherbase.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+<script>
+
+    setTimeout(function(){
+        if($('#msg').length>0)
+        {
+            $('#msg').remove();
+        }
+    },2000)
+    
+</script>
+{% include 'messages.html' %}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <span id="error"></span>
+        <div class="col-12">
+            
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-2"><h1><strong>Delete Classes details</strong></h1></div>
+
+                    <h2>are you sure you want to Delete yoga class details?</h2>
+                    <a href="{% url 'delete' d.id %}" class="btn btn-danger" style="margin:10px;font-size:large;color:white;">Delete</a>
+                    <a href="/teachcer/calendar/classlist" class="btn btn-success" style="font-size:large;color:white;">Back</a>
+                </div>
+            </div>
+        </div>                
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

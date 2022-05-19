@@ -1,0 +1,59 @@
+
+{% extends 'teacherbase.html' %}
+
+
+
+{% load static %}
+
+
+
+{% block content %}
+
+{% include 'messages.html' %}
+
+<style>
+
+  .welcome-container{
+      display: block;
+      margin-top: 15px;
+      padding: 3px;
+  }
+
+.name-container{
+      width: 100%;
+      height: 100%;
+      float: right;
+      text-align: right;
+      display: block;
+      margin: 0 auto;
+      padding: 5px;
+      background-color: white;
+  }
+
+
+  
+  </style>
+
+
+  
+
+
+<div class="container-fluid">   
+      <div class="" style=""><center><h1>Welcome To Teacher Dashboard</h1> </center><div>
+      <div class="rest-container"></div>
+</div> 
+
+
+
+
+<script>
+  setTimeout(function(){
+      if($('#msg').length>0)
+      {
+          $('#msg').remove();
+      }
+  },2000)
+</script>
+
+{% endblock content %}
+

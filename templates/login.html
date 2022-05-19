@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<head>
+    <title>Student Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    {% include 'messages.html' %}
+
+    <div class="container login-container" style="">
+        <div class="col-md-12">
+            <div class="card card-body">
+                <div class="row justify-content-center">
+                    <div class="row justify-content-center align-items-center pt-3 mb-2"><h1><strong>User Login</strong></h1></div>
+                </div>
+    
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm d-flex">
+                            <div class="card-body flex-fill">
+                                <form action="login_check" method="post" class="form"> {% csrf_token %}
+                                    <label for="uname"><b>Username</b></label>
+                                    <input type="text" placeholder="Email*" name="email" class="form-control" style="border-radius: 1rem;" required><br/>
+    
+                                    <label for="psw"><b>Password</b></label>
+                                    <input type="password" placeholder="Password*" name="password" style="border-radius: 1rem;" class="form-control" required>
+                                    
+                                    <div class="form-group row justify-content-center px-2 mt-2">
+                                        <div class="col align-self-start">
+                                            <div class="custom-control custom-checkbox mb-3"> <input id="customCheck1" type="checkbox" class="custom-control-input checkbox-muted"> <label for="customCheck1" class="custom-control-label text-muted">Remember Me</label> </div>
+                                        </div>
+                                        <div class="col-sm-6 px-0 text-right"> <span><a href="#" class="">Forgot Password?</a></span> </div>
+                                    </div>
+                                        
+                                    <button type="submit" class="form-control btn-success" style="border-radius: 1rem; cursor: pointer;"><b>Login</b></button><br/>
+                                </form>
+                                    <div class="pt-2 mt-3">
+                                        <div class="row justify-content-center">
+                                            <h6>Don't have an Account?<span><a href="/userregister" class=""> Register Now!</a></span></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+            
+    
+<script>
+    setTimeout(function(){
+        if($('#msg').length>0)
+        {
+            $('#msg').remove();
+        }
+    },2000)
+</script>
+
+</body>
+
+</html>
+
+{% endblock content %}

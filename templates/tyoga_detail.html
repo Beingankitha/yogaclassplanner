@@ -1,0 +1,155 @@
+{% extends 'teacherbase.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/yogaasan_detail.css' %}">
+<link rel="stylesheet" href="{% static 'css/lightslider.css' %}">
+<link rel="stylesheet" href="{% static 'css/slick.css' %}">
+<script src="{% static 'js/yogaasan_detail.js' %}"></script>
+<script src="{% static 'js/lightslider.js' %}"></script>
+<script src="{% static 'js/slick.js' %}"></script>
+
+<style>
+
+.yoga-detail p{
+    font-size: 17px;
+}
+
+</style>
+
+<div class="container col-md-12">
+    <div class="row">
+        <div class="col-md-5" id="yoga-content">
+            <div class = "yoga-content">
+                <h2 class = "yoga-title">{{asana.asana_name}}</h2>
+                <h4>{{asana.asana_sanscrut_name}}</h4>
+                <h3>{{asana.asana_english_name}}</h3>
+    
+                <div class = "">
+                    <p><b>Category: </b><span>{{asana.asana_position}} / {{asana.asana_type}}</span></p>
+                    <p><b>Difficulty: </b><span>{{asana.asana_difficulty}}</span></p>
+                </div>
+    
+                <div class="yoga-detail">
+                    <h2>Practice Steps: </h2>
+                    <p>{{asana.how_to_do|linebreaks }}</p>
+                    <h4>Benifit: </h4>
+                    <p>{{asana.benifit}}</p>
+                    <h4>Caution: </h4>
+                    <p>{{asana.caution}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5" id="yoga-img"> 
+
+            <div id="yoga-img-scroll">
+                <ul id="imageGallery" class="cs-hidden">
+                    {% for image in yoga_images %}
+                    <li data-thumb="{{image.images.url}}" data-src="{{image.images.url}}"><img src="{{image.images.url}}" alt="{{asana.asana_name}} Step {{forloop.counter}}"/></li>
+                    {% endfor %}
+                </ul>
+                
+                <div class="caption-container">
+                    <p id="caption"></p>
+                </div>
+
+                
+
+                
+                <!--<div class="slider-wrap">
+                    {% for image in yoga_images %}
+                        <div class="mySlides" id="mySlides">
+                            <img src="{{image.images.url}}" style="width:100%">
+                        </div>
+                    {% endfor %}
+    
+                    <a class="prev" onclick="plusSlides(-1)">❮</a>
+                    <a class="next" onclick="plusSlides(1)">❯</a>
+    
+                    <div class="caption-container">
+                        <p id="caption"></p>
+                    </div>
+                    <div class="thum-slider  w3-row-padding" id="thumb">
+                        {% for image in yoga_images %}
+                        <div class="w3-col s3 thumb" >
+                            <img class="demo w3-hover-opacity-off" alt="{{asana.asana_name}} Step {{forloop.counter}}" src="{{image.images.url}}" style="width:100%;cursor:pointer" onclick="currentSlide({{ forloop.counter }})">
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                </div>-->
+                
+            </div>
+            <div id="thumb-yoga-content">
+                <div id="thumb-scroll">
+                    
+                </div>
+                <br>
+                <div class = "yoga-detail">
+                    <div class="">
+                    <h4>Starting Position: <small style="color:black !important;">{{asana.start_position}}</small></h4>
+                    <h4>Concentration: <p style="color:black !important;">{{asana.concentration}}</p></h4>
+                    <h4>Breath: <small style="color:black !important;">{{asana.breath}}</small></h4>
+                    <h4>Repetitions: <small style="color:black !important;">{{asana.repetitions}}</small></h4>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+<div>
+
+<!--<div class = "card-wrapper">
+    <div class = "card">
+        <div class = "yoga-content">
+            <h2 class = "yoga-title">{{asana.asana_name}}</h2>
+            <h4>{{asana.asana_sanscrut_name}}</h4>
+            <h3>{{asana.asana_english_name}}</h3>
+            <div class = "">
+                <p><b>Category: </b><span>{{asana.asana_category}} / {{asana.asana_sub_category}}</span></p>
+                <p><b>Difficulty: </b><span>{{asana.difficulty}}</span></p>
+            </div>
+            <div class = "yoga-detail">
+                <h2>Practice Steps: </h2>
+                <p>{{asana.how_to_do}}</p>
+                <h4>Benifit: </h4>
+                <p>{{asana.benifit}}</p>
+                <h4>Caution: </h4>
+                <p>{{asana.caution}}</p>
+            </div>
+        </div>
+        <div class="gallery-parent">
+            <div class="slider-wrap">
+                {% for image in yoga_images %}
+                    <div class="mySlides" id="mySlides">
+                        <img src="{{image.images.url}}" style="width:100%">
+                    </div>
+                {% endfor %}
+                <a class="prev" onclick="plusSlides(-1)">❮</a>
+                <a class="next" onclick="plusSlides(1)">❯</a>
+                <div class="caption-container">
+                    <p id="caption"></p>
+                </div>
+                <div class="thum-slider  w3-row-padding">
+                    {% for image in yoga_images %}
+                    <div class="w3-col s3 thumb" id="thumb">
+                        <img class="demo w3-hover-opacity-off" alt="{{asana.asana_name}} Step {{forloop.counter}}" src="{{image.images.url}}" style="width:100%;cursor:pointer" onclick="currentSlide({{ forloop.counter }})">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class = "yoga-detail">
+                <div class="">
+                    <h4>Starting Position: <small style="color:black !important;">{{asana.start_position}}</small></h4>
+                    <h4>Concentration: <small style="color:black !important;">{{asana.concentration}}</small></h4>
+                    <h4>Breath: <small style="color:black !important;">{{asana.breath}}</small></h4>
+                    <h4>Repetitions: <small style="color:black !important;">{{asana.repetitions}}</small></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+{% endblock content %}

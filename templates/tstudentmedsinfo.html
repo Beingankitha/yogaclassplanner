@@ -1,0 +1,101 @@
+{% extends 'teacherbase.html' %}
+{% load static %}
+
+
+{% block content %}
+
+{% include 'messages.html' %}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <span id="error"></span>
+        <div class="col-12">
+            <a href="/teachcer/calendar/classlist" class="btn btn-success" style="font-size:large;color:white;">Back</a><br/><br/>
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-2" style="border-bottom: 1px solid #28a745 !important; margin-bottom: 1em;"><h1><strong>Student `{{ medsinfo.user_email.fullname| title }}` Medical Information details</strong></h1></div>
+                        <div class="form-group">
+                            <label style="text-align: justify; text-justify: inter-word;">The following information is required to ensure your health. Whilst yoga may be practised safely by most people, there are certain conditions that require special attention. If you are unsure, please consult your GP before commencing class. Please indicate in the boxes below whether or not you have any of the following medical conditions and then provide further information. These following conditions require specific modifications to your yoga practice:</label><br/>
+                            <table style="width:100%" ><br/>
+                                <tr>
+                                    <td><input class="checkboxes" type="Checkbox" name="h_cond" value="Abdominal problems" required {% if medsinfo.abdominal == True %} checked="checked" {% endif %}>  Abdominal problems</td>
+                                    <td><input class="checkboxes" type="Checkbox" name="h_cond" value="back pain / problems" required {% if medsinfo.back_pain == True %} checked="checked" {% endif %}> back pain / problems</td>
+                                </tr>
+                                <tr>
+                                    <td><input class="checkboxes" type="Checkbox" name="h_cond" value="Neck problems" required {% if medsinfo.neck == True %} checked="checked" {% endif %}> Neck problems</td>
+                                    <td><input class="checkboxes" type="Checkbox" name="h_cond" value="Hip problems" required {% if medsinfo.hip == True %} checked="checked" {% endif %}> Hip problems</td>
+                                </tr>
+                                <tr>
+                                    
+                                    <td><input class="checkboxes" type="Checkbox" name="h_cond" value="Heart problems" required {% if medsinfo.heart == True %} checked="checked" {% endif %}> Heart problems</td>
+                                    <td><input class="checkboxes" type="Checkbox" name="h_cond" value="Low blood pressure" required {% if medsinfo.low_blood_pressure == True %} checked="checked" {% endif %}> Low blood pressure</td>
+                                </tr>
+                                <tr>
+                                    
+                                    <td><input class="checkboxes" type="Checkbox" name="h_cond" value="Arthritis" required {% if medsinfo.arthritis == True %} checked="checked" {% endif %}> Arthritis</td>
+                                    <td><input class="checkboxes" type="Checkbox" name="h_cond" value="Spine problems" required {% if medsinfo.spine == True %} checked="checked" {% endif %}> Spine problems</td>
+                                </tr>
+                                <tr>
+                                    
+                                    <td><input class="checkboxes" type="Checkbox" name="h_cond" value="Knee problems" required {% if medsinfo.knee == True %} checked="checked" {% endif %}> Knee problems</td>
+                                    <td><input class="checkboxes" type="Checkbox" name="h_cond" value="Shoulder problems" required {% if medsinfo.shoulder == True %} checked="checked" {% endif %}> Shoulder problems</td>
+                                </tr>
+                                <tr>
+                                    
+                                    <td><input class="checkboxes" type="Checkbox" name="h_cond" value="Asthma" required {% if medsinfo.asthma == True %} checked="checked" {% endif %}> Asthma</td>
+                                    <td><input class="checkboxes" type="Checkbox" name="h_cond" value="Brain function" required {% if medsinfo.epilepsy_brain == True %} checked="checked" {% endif %}> Epilepsy/Brain function</td>
+                                </tr>
+                                <tr>
+                                    
+                                    <td><input class="checkboxes" type="Checkbox" name="h_cond" value="Anxiety / depression" required {% if medsinfo.anxiety_depression == True %} checked="checked" {% endif %}> Anxiety / depression</td>
+                                    <td><input class="checkboxes" type="Checkbox" name="h_cond" value="Respiratory issues" required {% if medsinfo.respiratory_issues == True %} checked="checked" {% endif %}> Respiratory issues</td>
+                                </tr>
+                                <tr>
+                                    <td><input class="checkboxes" type="Checkbox" name="h_cond" value="Eye problems" required {% if medsinfo.eye == True %} checked="checked" {% endif %}> Eye problems</td>
+                                    <td><input class="checkboxes" type="Checkbox" name="h_cond" value="Kidney problems" required {% if medsinfo.kidney == True %} checked="checked" {% endif %}> Kidney problems</td>
+                                </tr>
+                                <tr>
+                                    
+                                    <td><input class="checkboxes" type="Checkbox" name="h_cond" value="High blood pressure" required {% if medsinfo.high_blood_pressure == True %} checked="checked" {% endif %}> High blood pressure</td>
+                                    <td><input class="checkboxes" type="Checkbox" name="h_cond" value="Other - please specify" required {% if medsinfo.other_problems == True %} checked="checked" {% endif %}> Other - please specify</td>
+                                </tr>
+                            </table><br/>
+                            <span id="h_condMsg"></span>
+                            <label>If Other, please provide further information. (Write N/A if you dont have any health condition)</label><br><br/>
+                            <input type="text" class="form-control" value="{{medsinfo.other_information}}" name="o_h_cond_text" id="o_h_cond_text" readonly ><br>
+                            <span id="fnmMsg"></span>
+                            <label tyle="text-align: justify; text-justify: inter-word;">Do you have any old injuries that still trouble you? Or any other medical condition not covered above that might be adversely affected by yoga practice?</label><br/><br/>
+                            <table style="width:100%" >
+                                <tr style="" >
+                                    <input type="radio" name="old_h_cond" {% if medsinfo.any_old_injury == True %} checked="checked" {% endif %} readonly> Yes &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" name="old_h_cond" {% if medsinfo.any_old_injury == False %} checked="checked" {% endif %} readonly> No<br><br>
+                                </tr>
+                                <span id="old_h_condMsg"></span>
+                            </table>
+                            <label>If Yes, please provide further information  (Write N/A if you dont have any old injuries)</label><br/><br/>
+                            <input type="text" class="form-control" value="{{medsinfo.any_old_injury_info}}" name="old_h_cond_text" id="old_h_cond_text" readonly><br>
+                            <label tyle="text-align: justify; text-justify: inter-word;">Have you attended a yoga class before?</label><br/><br/>
+                            <table style="width:100%" >
+                                <tr style="" >
+                                    <input type="radio" name="yoga_exp" {% if medsinfo.is_yoga_exp == True %} checked="checked" {% endif %} readonly> Yes &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input type="radio" name="yoga_exp" {% if medsinfo.is_yoga_exp == False %} checked="checked" {% endif %} readonly> No<br><br>
+                                </tr>
+                                <span id="yoga_expMsg"></span>
+                            </table>
+                            
+                            <label>If Yes, what style of yoga have you practised?</label><br/><br/>
+                            <select class="form-control" name="yoga_exp_level" id="yoga_exp_level" readonly>
+                                <option selected>{{ medsinfo.yoga_exp_level }}</option>
+                            </select><br>
+                        </div>
+                    
+                </div>
+            </div>
+        </div>                
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

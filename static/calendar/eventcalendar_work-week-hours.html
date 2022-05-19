@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+    <script>
+        // Ignore this in your implementation
+        window.isMbscDemo = true;
+    </script>
+
+    <title>Work calendar</title>
+
+    <!-- Mobiscroll JS and CSS Includes -->
+    <link rel="stylesheet" href="css/mobiscroll.javascript.min.css">
+    <script src="js/mobiscroll.javascript.min.js"></script>
+
+    <style type="text/css">
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    body,
+    html {
+        height: 100%;
+    }
+
+    .demo-work-week-hours {
+        height: 100%;
+    }
+
+    </style>
+
+</head>
+<body>
+
+<div mbsc-page class="demo-work-week-hours">
+  <div style="height:100%">
+      <div id="demo-work-week-hours"></div>
+  </div>
+</div>
+
+<script>
+
+    mobiscroll.setOptions({
+        locale: mobiscroll.localeEn,                   // Specify language like: locale: mobiscroll.localePl or omit setting to use default
+        theme: 'ios',                                  // Specify theme like: theme: 'ios' or omit setting to use default
+        themeVariant: 'light'                          // More info about themeVariant: https://docs.mobiscroll.com/5-16-1/javascript/eventcalendar#opt-themeVariant
+    });
+    
+    var inst = mobiscroll.eventcalendar('#demo-work-week-hours', {
+        dragToCreate: true,                            // More info about dragToCreate: https://docs.mobiscroll.com/5-16-1/javascript/eventcalendar#opt-dragToCreate
+        dragToMove: true,                              // More info about dragToMove: https://docs.mobiscroll.com/5-16-1/javascript/eventcalendar#opt-dragToMove
+        invalid: [{                                    // More info about invalid: https://docs.mobiscroll.com/5-16-1/javascript/eventcalendar#opt-invalid
+            start: '12:00',
+            end: '13:00',
+            title: 'Lunch break',
+            type: 'lunch',
+            recurring: {
+                repeat: 'weekly',
+                weekDays: 'MO,TU,WE,TH,FR'             // More info about weekDays: https://docs.mobiscroll.com/5-16-1/javascript/eventcalendar#opt-weekDays
+            }
+        }],
+        view: {                                        // More info about view: https://docs.mobiscroll.com/5-16-1/javascript/eventcalendar#opt-view
+            schedule: {
+                type: 'week',
+                startDay: 1,
+                endDay: 5,
+                startTime: '09:00',
+                endTime: '18:00'
+            }
+        },
+        onEventCreateFailed: function (event, inst) {  // More info about onEventCreateFailed: https://docs.mobiscroll.com/5-16-1/javascript/eventcalendar#event-onEventCreateFailed
+            if (event.invalid.type == "lunch") {
+                mobiscroll.toast({ 
+                    
+                    message: "Can't create this task on lunch break."
+                });
+            }
+        },
+        onEventUpdateFailed: function (event, inst) {  // More info about onEventUpdateFailed: https://docs.mobiscroll.com/5-16-1/javascript/eventcalendar#event-onEventUpdateFailed
+            if (event.invalid.type == "lunch") {
+                mobiscroll.toast({ 
+                    
+                     message: "Can't schedule this task on lunch break."
+                });
+            }
+        }
+    });
+    
+    mobiscroll.util.http.getJson('https://trial.mobiscroll.com/workday-events/', function (events) {
+        inst.setEvents(events);
+    }, 'jsonp');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container" style="padding: 1rem; margin-top: 1rem;">
+    <p><h1 class="text-center pricing-title">Select Membership Plans</h1></p>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card pricing-card pricing-plan-basic">
+          <div class="card-body">
+            <i class="mdi mdi-cube-outline pricing-plan-icon"></i>
+            <p class="pricing-plan-title">Basic</p>
+            <h3 class="ml-3">7-DAY FREE TRIAL</h3>
+            <h2 class="h1 font-weight-bold">£13<span class="text-small font-weight-normal ml-2">/ month after trial</span></h2>
+            <div class="border-bottom border-success mx-auto my-4" style="width: 5rem; height: 6px; border-radius: 1rem; border-top: 5px solid;"></div>
+            <ul class="pricing-plan-features">
+              <li class="mb-3"><i class="fa fa-check mr-2 text-primary"></i>A MONTH FREE TRIAL</li>
+              <li class="mb-3"><i class="fa fa-check mr-2 text-primary"></i>A MONTH FREE TRIAL</li>
+              <li class="mb-3"><i class="fa fa-check mr-2 text-primary"></i>Custom Hold Music</li>
+              <li class="mb-3"><i class="fa fa-times mr-2 text-muted"></i><del>10 participants max</del></li>
+            </ul>
+            <a href="" class="btn pricing-plan-purchase-btn">SIGN UP</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card pricing-card pricing-card-highlighted  pricing-plan-pro">
+          <div class="card-body">
+              <i class="mdi mdi-trophy pricing-plan-icon"></i>
+            <p class="pricing-plan-title">Annual</p>
+            <h3 class="ml-3">7-DAY FREE TRIAL</h3>
+            <h2 class="h1 font-weight-bold">$79<span class="text-small font-weight-normal ml-2">/ month after trial</span></h2>
+            <div class="border-bottom border-success mx-auto my-4" style="width: 5rem; height: 6px; border-radius: 1rem; border-top: 5px solid;"></div>
+            <ul class="pricing-plan-features">
+                <li class="mb-3"><i class="fa fa-check mr-2 text-primary"></i>A MONTH FREE TRIAL</li>
+                <li class="mb-3"><i class="fa fa-check mr-2 text-primary"></i>A MONTH FREE TRIAL</li>
+                <li class="mb-3"><i class="fa fa-check mr-2 text-primary"></i>Custom Hold Music</li>
+                <li class="mb-3"><i class="fa fa-times mr-2 text-muted"></i><del>10 participants max</del></li>
+            </ul>
+            <a href="" class="btn pricing-plan-purchase-btn">SIGN UP</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card pricing-card pricing-plan-enterprise">
+          <div class="card-body">
+            <i class="mdi mdi-wallet-giftcard pricing-plan-icon"></i>
+            <p class="pricing-plan-title">Premium</p>
+            <h3 class="ml-3">7-DAY FREE TRIAL</h3>
+            <h2 class="h1 font-weight-bold">$99<span class="text-small font-weight-normal ml-2">/ month after trial</span></h2>
+            <div class="border-bottom border-success mx-auto my-4" style="width: 5rem; height: 6px; border-radius: 1rem; border-top: 5px solid;"></div>
+            <ul class="pricing-plan-features">
+                <li class="mb-3"><i class="fa fa-check mr-2 text-primary"></i>A MONTH FREE TRIAL</li>
+                <li class="mb-3"><i class="fa fa-check mr-2 text-primary"></i>A MONTH FREE TRIAL</li>
+                <li class="mb-3"><i class="fa fa-check mr-2 text-primary"></i>Custom Hold Music</li>
+                <li class="mb-3"><i class="fa fa-times mr-2 text-muted"></i><del>10 participants max</del></li>
+            </ul>
+            <a href="" class="btn pricing-plan-purchase-btn">SIGN UP</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+{% endblock content%}

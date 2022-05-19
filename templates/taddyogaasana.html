@@ -1,0 +1,341 @@
+{% extends 'teacherbase.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+<style>
+
+#img-upload{
+    color:white;
+    font-weight:bold;
+    background: #28a745;
+}
+
+img{
+    margin:10px;
+}
+
+input[type="file"]{
+    margin:10px;
+}
+
+</style>
+
+{% include 'messages.html' %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+                    <div class="row"><a href="/teacher/yogadictionary" class="mx-2" style="color:blue !important;"> Back </a><h1 class="col-10"><center>Add Yoga Asana</center></h1></div>
+                    <div class="">
+                    
+
+                    <div class="card">
+                        <div class="card-body">
+                            <form method="POST" action="addyogaasana" enctype="multipart/form-data">{% csrf_token %}
+                                <div class="form-group">
+                                    <label>Yoga Asana Name</label><br>
+                                    <input type="text" class="form-control" name="yoga_name" value="" required="required"/><br>
+                                    <label>Yoga Asana Sanskrut Name</label><br>
+                                    <input type="text" class="form-control" value="" name="yoga_sanskrut_name" id="yoga_sanskrut_name" required="required" ><br>
+                                    <label>Yoga Asana Pose Name</label><br>
+                                    <input type="text" class="form-control" value="" name="yoga_pose_name" id="yoga_pose_name" required="required" ><br>
+                                    <label>Select Yoga Asana Category </label><br>
+                                    <select class="form-control" name="yoga_pos" id="yoga_pos" required="required">
+                                        <option value="" selected disabled hidden>Select ...</option>
+                                        {% for p in position %}
+                                        <option value="{{p.position_name}}">{{p.position_name}}</option>
+                                        {% endfor %}
+                                    </select><br>
+                                    <label>Select Yoga Asana Postion SubCategory</label><br>
+                                    <select class="form-control" name="yoga_typ" id="yoga_typ" required="required">
+                                        <option value="" selected disabled hidden>Select ...</option>
+                                        {% for t in type %}
+                                        <option value="{{t.type_name}}">{{t.type_name}}</option>
+                                        {% endfor %}
+                                    </select><br>
+                                    <label>Select Yoga Asana Difficulty Level </label><br>
+                                    <select class="form-control" name="yoga_lev" id="yoga_lev" required="required">
+                                        <option value="" selected disabled hidden>Select ...</option>
+                                        {% for l in level %}
+                                        <option value="{{l.difficulty_name}}">{{l.difficulty_name}}</option>
+                                        {% endfor %}
+                                    </select><br>
+                                    <label>Yoga Asana Description along with its variation details </label><br>
+                                    <textarea class="form-control" name="yoga_desc" id="yoga_desc" value="" rows="9" required="required"> </textarea><br/>
+                                    <label>Yoga Asana Benifit along with body muscles it affects </label><br>
+                                    <textarea class="form-control" name="yoga_benifit" id="yoga_benifit" value="" rows="3" required="required"> </textarea><br/>
+                                    <label>Yoga Asana Cautions about with person who have health problems avoid it.</label><br>
+                                    <textarea class="form-control" name="yoga_caution" id="yoga_caution" value="" rows="2" required="required"> </textarea><br/>
+                                    <label>Yoga Asana Starting Postion </label><br>
+                                    <input type="text" class="form-control" name="yoga_start_pos" id="yoga_start_pos" value="" required="required"/><br>
+                                    <label>Yoga Asana Concentration </label><br>
+                                    <input type="text" class="form-control" name="yoga_conc" id="yoga_conc" value="" required="required"/><br>
+                                    <label>Yoga Asana Breathing info while doing asana </label><br>
+                                    <input type="text" class="form-control" name="yoga_breath" id="yoga_breath" value="" required="required"/><br>
+                                    <label>Yoga Asana Repeatation </label><br>
+                                    <input type="text" class="form-control" name="yoga_rept" id="yoga_rept" value="" required="required"/><br>
+                                    <div style="border-top: 2px solid rgb(197, 197, 197) !important;border-bottom: 2px solid rgb(197, 197, 197) !important; padding-bottom:10px;">
+                                        <h6 id="img-upload">Yoga Asana Image upload</h6>
+                                        <label> Choose Images to Upload </label>
+                                            <p>Note:- Images name should contain yoga asana name. i.e., yogaasananame-01.jpg, yogaasananame-02.jpg., Image dimention minimum 800(w)*500(h)</p></p>
+                                            
+                                            <div id='previewHolder' style='width: 200px'>
+                                                <div class='button btn' id='addBtn' style='text-align:center;padding: 4px'><svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 32 32">
+                                            <g transform="translate(0 -1020)" stroke="#00c03b" fill="none">
+                                                <circle cx="16" cy="1036" r="14.5" stroke-width="2.998"/>
+                                                <path d="m8 1036h16" stroke-linecap="round" stroke-width="3"/>
+                                                <path d="m16 1044v-16" stroke-linecap="round" stroke-width="3"/>
+                                            </g>
+                                            </svg></div>
+                                                </div>
+
+
+                                        
+                                    </div>
+
+                                    <br/><button class="form-control btn btn-success" id="btn_manage" value="submit">Submit</button>
+                            <form>
+                            
+                        </div>
+                    </div>
+                    
+                    </div>
+                
+        <div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+            <div class="col-12">
+                
+            </div>
+    </div>
+</div>
+
+<script>
+
+    function newEl(tag){return document.createElement(tag)}
+    function byId(id){return document.getElementById(id)}
+    function allByTag(tag,parent){return (parent == undefined ? document : parent).getElementsByTagName(tag)}
+    
+    
+    // useful for HtmlCollection, NodeList, String types
+    function forEach(array, callback, scope){for (var i=0,n=array.length; i<n; i++)callback.call(scope, array[i], i, array);} // passes back stuff we need
+    
+    // callback gets data via the .target.result field of the param passed to it.
+    function loadFileObject(fileObj, loadedCallback){var a = new FileReader();a.onload = loadedCallback;a.readAsDataURL( fileObj );}
+    
+    
+    window.addEventListener('load', onDocLoaded, false);
+    
+    function onDocLoaded(evt)
+    {
+        byId('addBtn').addEventListener('click', onAddBtnClicked, false);
+    }
+    
+    function onAddBtnClicked(evt)
+    {
+        var wrapper = newEl('div');
+        wrapper.className = 'item';
+    
+        var input = newEl('input')
+        input.type = 'file';
+        input.class = 'btn col-4'
+        input.accept="image/*"
+        
+        
+        input.addEventListener('change', onFileChanged, false);
+        input.name = 'inputFiles[]';		
+        wrapper.appendChild(input);
+        
+        byId('previewHolder').appendChild(wrapper);
+    }
+    
+    function onFileChanged(evt)
+    {
+        var numFiles = this.files.length;
+        var itemWrapper = this.parentNode;
+        var fileInput = this;
+        
+        if (numFiles == 0)
+        {
+            
+            var previewHolder = itemWrapper.parentNode;
+            previewHolder.removeChild(itemWrapper);
+        }
+        else
+        {
+            
+            while (allByTag('img', itemWrapper).length != 0)
+                itemWrapper.removeChild( allByTag('img', itemWrapper)[0] );
+                
+            forEach(this.files, loadAndPreviewImage);
+            
+            function loadAndPreviewImage(fileObj)
+            {
+                loadFileObject(fileObj, onFileObjLoaded);
+                
+                function onFileObjLoaded(evt)	//.target.result;
+                {
+                    var img = newEl('img');
+                    img.style.height = '300px';
+                    img.style.width = '300px';
+                    img.style.object = 'cover';
+                    img.src = evt.target.result;
+                    itemWrapper.insertBefore(img, fileInput);
+                }
+            }
+        }
+    }
+
+    
+
+    /*const firstUpload = new FileUploadWithPreview.FileUploadWithPreview(
+        "myFirstImage", { 
+            maxFileCount: 13,
+            multiple: true, 
+            text:{
+                chooseFile: 'Take your pick...',
+                label: 'Choose Images to Upload <p>Note:- Images name should contain yoga asana name. i.e., yogaasananame-01.jpg, yogaasananame-02.jpg.), Image dimention minimum 800(w)*500(h))</p>',
+            },
+            });
+
+    window.addEventListener("fileUploadWithPreview:imagesAdded", function (e) {
+        if (e.detail.uploadId === "myFirstImage") {
+            for (let i = 0; i < firstUpload.cachedFileArray.length; i++) {
+                console.log(e.detail.cachedFileArray[i]);
+            }
+            console.log(e.detail.cachedFileArray[0].name.split(":")[0]);
+            console.log(e.detail.addedFilesCount);
+        }
+    });
+
+    window.addEventListener("fileUploadWithPreview:imageDeleted", function (e) {
+        if (e.detail.uploadId === "myFirstImage") {
+            for (let i = 0; i < firstUpload.cachedFileArray.length; i++) {
+                console.log(e.detail.cachedFileArray[i]);
+            }
+            console.log(e.detail.cachedFileArray[0].name.split(":")[0]);
+            console.log(e.detail.currentFileCount);
+        }
+    });
+
+    JSON.stringify(
+    
+    .name.split(":")[0]
+
+    function GetImageList(){
+
+        var yoga_name = $('[name="yoga_name"]').val();
+
+        var images_list = [];
+
+        for (let i = 0; i < firstUpload.cachedFileArray.length; i++) {
+            images_list.push(firstUpload.cachedFileArray[i].name.split(":")[0]);
+        }
+
+        console.log(images_list);
+        console.log(firstUpload.cachedFileArray.length);
+
+        var form = $('search_form').serializeArray();
+
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: { 'images_list': images_list, 'yoga_name':yoga_name, 'csrfmiddlewaretoken': '{{ csrf_token }}', },
+                success: function(result) {
+                    console.log('Data Has been sent')
+                }
+            });
+
+            return true;
+    }
+
+    let form = document.getElementById('commentForm')
+
+    form.addEventListener('submit', stopReload) 
+    function stopReload(e){
+
+        e.preventDefault();
+
+        var images_list = [];
+
+        var myArray  = $.makeArray(firstUpload.cachedFileArray[0]);
+
+        for (let i = 0; i < firstUpload.cachedFileArray.length; i++) {
+            images_list.push(firstUpload.cachedFileArray[i]);
+            
+            
+        }
+
+        console.log(images_list);
+        console.log(firstUpload.cachedFileArray.length);
+        console.log(JSON.stringify(firstUpload.cachedFileArray));
+
+        yoga_name = $('[name="yoga_name"]').val();
+        yoga_sanskrut_name = $('[name="yoga_sanskrut_name"]').val();
+        yoga_pose_name = $('[name="yoga_pose_name"]').val();
+        yoga_pos = $('[name="yoga_pos"]').val();
+        yoga_typ = $('[name="yoga_typ"]').val();
+        yoga_lev = $('[name="yoga_lev"]').val();
+        yoga_desc = $('[name="yoga_desc"]').val();
+        yoga_benifit = $('[name="yoga_benifit"]').val();
+        yoga_caution = $('[name="yoga_caution"]').val();
+        yoga_start_pos = $('[name="yoga_start_pos"]').val();
+        yoga_conc = $('[name="yoga_conc"]').val();
+        yoga_breath = $('[name="yoga_breath"]').val();
+        yoga_rept = $('[name="yoga_rept"]').val();
+        
+        $.ajax({
+                type: "POST",
+                url: '/teacher/yogadictionary/addyogaasana',
+                
+                data: { 'images_list': images_list, 
+                'yoga_name': yoga_name,
+                'yoga_sanskrut_name':yoga_sanskrut_name,
+                'yoga_pose_name':yoga_pose_name,
+                'yoga_pos':yoga_pos,
+                'yoga_typ':yoga_typ,
+                'yoga_lev':yoga_lev,
+                'yoga_desc':yoga_desc,
+                'yoga_benifit':yoga_benifit,
+                'yoga_caution':yoga_caution,
+                'yoga_start_pos':yoga_start_pos,
+                'yoga_conc':yoga_conc,
+                'yoga_breath':yoga_breath,
+                'yoga_rept':yoga_rept,
+                'csrfmiddlewaretoken': '{{ csrf_token }}' , },
+
+                processData: false,
+                
+                success: function(response) {
+                    console.log('Data Has been sent');
+
+                    if(response.status === 0){
+
+                        alert(response.message);
+                        e.preventDefault();
+                        window.location.href = '/teacher/yogadictionary/addyogaasana';
+                    }
+                    else if(response.status === 1){
+                        alert(response.message);
+                        e.preventDefault();
+                        form.reset();
+                        firstUpload.resetPreviewPanel();
+                        window.location.href = '/teacher/yogadictionary';
+                        
+                    }                    
+                    
+                }
+            });
+
+        }*/
+
+
+</script>
+
+{% endblock content %}

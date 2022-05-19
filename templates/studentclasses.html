@@ -1,0 +1,145 @@
+{% extends 'studentbase.html' %}
+
+{% load static %}
+
+{% block content %}
+    
+
+{% include 'messages.html' %}
+<script>
+  setTimeout(function(){
+      if($('#msg').length>0)
+      {
+          $('#msg').remove();
+      }
+  },2000)
+</script>
+  
+    
+    
+
+
+<link href="{% static 'css/classcalendar.css' %}" rel="stylesheet" />
+<script src="{% static 'js/classcalendar.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+<style>
+
+    td.fc-day.fc-past {
+        background-color: #EEEEEE;
+    }
+
+.fc-event{
+    cursor: pointer;
+}
+
+</style>
+<script>
+    
+    
+    document.addEventListener('DOMContentLoaded', function() {
+
+        var calendarEl = document.getElementById('classcalendar');
+        var today = new Date();
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            headerToolbar: {
+                left: 'prev,next, today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay,list'
+            },
+            initialDate: today,
+            navLinks: true,
+            selectable: true,
+            selectMirror: true,
+            slotDuration: '01:00',
+            eventColor: '#378006',
+            dayMaxEvents: true,            
+            events : {{ class_event | safe }},
+            eventConstraint: {
+
+                start: moment().format('YYYY-MM-DD'),
+                
+            },
+            businessHours: {
+                start: moment().format('HH:mm'), 
+                end: '18:00', 
+                dow: [0,1,2,3,4,5,6]
+            },
+            select: function(start, end, jsEvent, view) {
+                var selectedDate = moment(start.start).format('YYYY/MM/DD'); 
+                var todayDate = moment().format('YYYY/MM/DD'); 
+                if(selectedDate >= todayDate){ 
+                        console.log(selectedDate);
+                        console.log('clicked')
+                        var inp = document.getElementById("title");
+                        inp.focus();
+                        inp.select();
+                } else { 
+                    alert('Previous date is not allowed'); 
+                } 
+
+            },
+            eventClick: function(info) {
+                /*function insert(title, event){
+                    var dom = $("#insert_here")
+                    var template = '<tr><td class="o-box-name">'+event+'</td><td><a href="" class="postpone-del-text">'+title+'</a></td><td><a href="" class="cancel-del-text">Cancel</a></td></tr>' 
+                    dom.append(template);
+                  };
+                  
+                  $("#successModal").modal("show");
+                $("#successModal .modal-body p").text(event.title);*/
+                if (info.event.title) {
+                    alert(title);
+                }
+            },
+
+            eventDrop: function (info) {
+                var newDate = new Date(info.event.start);
+                if (newDate < Date.now()) {
+                    info.revert();
+                }
+            },
+
+            eventDrop: function(event, delta, revertFunc) {
+                if(event.start < currentDate) {
+                    revertFunc();
+                }
+            },
+            
+            
+        });
+        
+
+        calendar.render();
+    });
+
+</script>
+<div class="container">
+    <div class="row">
+        <div id="insert_here" class="col-md-4">
+
+        </div>
+        <div class="col-md-8">  
+          <div id="classcalendar" style=""></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-body">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+    <p></p>
+    </div>
+    </div>
+    </div>
+
+
+{% endblock content %}
+    
+
+

@@ -1,0 +1,18 @@
+{% extends 'studentbase.html' %}
+
+{% load static %}
+
+{% block content %}  
+
+{% include 'messages.html' %}
+<script>
+setTimeout(function(){
+    if($('#msg').length>0)
+    {
+        $('#msg').remove();
+    }
+},2000)
+</script>
+
+
+{% endblock content%}

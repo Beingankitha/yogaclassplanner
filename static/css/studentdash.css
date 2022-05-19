@@ -1,0 +1,210 @@
+* {
+    box-sizing: border-box;  
+    background-color: offwhite;
+}
+
+html {
+    height: 100vh;
+}
+
+body {
+    overflow-x: hidden;
+    font-family: 'Josefin Sans', sans-serif !important;
+    /*font-family: 'Montserrat', sans-serif;*/
+    color: black;
+    margin: 0%;
+    padding: 0;
+    height: 100vh;
+}
+
+/* side nav */
+
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 220px;
+    font-size: 16px;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    font-family: 'Josefin Sans', sans-serif;
+    color: black;
+    background-color: #FAF9F6 !important;
+    border-right: 1px solid #e4e2e2;
+    align-items: center!important;
+}
+
+.nav>li>a {
+    text-decoration:none;
+    color : black;
+    }
+
+    .nav>li>a:active{
+    background: transparent !important;
+    font-size: large;
+    color : #28a745 ;
+    border-bottom: 1px solid #28a745;
+    }
+
+    .active{
+    border-bottom: 1px solid #28a745;
+    color: #28a745 !important;
+    }
+
+    .nav>li>a:hover{
+    color: #178030;
+    cursor: pointer;
+    background:  transparent !important;
+}
+
+/* content nav with scroll */
+
+div.content {
+    margin-left: 200px;
+    padding: 1px 16px;
+    height: 100VH;
+}
+
+/* Student Profile page and edit profile */
+
+.myBtnContainer{
+    margin-top: 10px;
+}
+
+.btn {
+    padding: 7px 16px;
+    height: 50px;
+    background-color: #28a745 !important;
+    color: black;
+    cursor: pointer;
+    font-size: x-large;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-radius: 2px solid #28a745 !important;
+}
+
+.btn:hover {
+    background-color: #217334 !important;
+    color: White !important;
+}
+
+.btn.active {
+    color: back !important;
+    border-bottom: 2px solid #28a745 !important;
+}
+
+/* yoga dictionary */
+
+.main{
+    padding: 10px;
+    margin-left: 10px;
+}
+
+
+   /* Create three equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 33.33%;
+    display: none; /* Hide all elements by default */
+}
+
+
+  /* Clear floats after rows */ 
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+  /* Content */
+
+.yogarow{
+    margin-top: 10px ;
+}
+
+.content {
+    background-color: offwhite;
+}
+
+.card-img-top{
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+}
+
+.center-block{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination>li>a{
+    color: black;
+
+}
+
+.pagination>li>a:hover{
+    color: black;
+    background-color: #28a745;
+    
+}
+
+.pagination>.active>a, .pagination>.active>a:hover{
+    background-color: transparent;
+    border-color: #28a745;
+    color: black;
+}
+
+.yogamain{
+    height: 100%;
+}
+
+section{
+    height: 100%;
+}
+
+.yoga-footer{
+    border-top: 1px solid #d0cece ;
+    position: sticky;
+}
+
+.profile-left{
+    height: 100vh;
+}
+
+.btn-class{
+    display: table;
+    align-items: center;
+    justify-content: space-around;
+}
+
+
+/*---Yoga description Search bar--*/
+
+
+
+
+
+
+
+
+/* media responsive website */
+
+@media screen and (max-width: 700px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .sidebar a {float: left;}
+    div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+    .sidebar a {
+        text-align: center;
+        float: none;
+    }
+}
+

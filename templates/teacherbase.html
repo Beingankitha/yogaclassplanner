@@ -1,0 +1,126 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% block meta %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">{% endblock %}
+
+    {%block title%}<title>Teacher dashboard</title>{% endblock %}
+
+    {% block head_favicon %}<link rel="icon" href="{% static 'images/logo/favicon.ico' %}" type="image/ico" />{% endblock head_favicon %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/teacherdash.css' %}" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    {% comment %} <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> {% endcomment %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+    {% block sidebar %}
+
+    <div class="wrapper">
+        
+        <nav id="sidebar" class="sticky-top" style="border-right: 1px solid lightgrey;">
+            <div class="sidebar-header">
+                <h2><a href="/teacherdash"><img src="{% static 'images/logo/logo1.png' %}" alt="Logo" title="Logo" style="height: 70px; "></a></h2>
+            </div>
+            <ul class="list-unstyled components" style="padding-left:10px;">
+                <a href="/teacher/dashboard"><h5>Teacher Dashboard</h5><br/></a>
+                <li class="active">
+                    <a href="#profileSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Profile</a>
+                    <ul class="collapse list-unstyled" id="profileSubmenu">
+                        <li>
+                            <a href="/teacher/profile">Profile Info</a>
+                        </li>
+                        <li>
+                            <a href="/teacher/uploaddocument">Upload document</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#calenderSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Calender</a>
+                    <ul class="collapse list-unstyled" id="calenderSubmenu">
+                        <li>
+                            <a href="/teacher/calendar">Add Timetable</a>
+                        </li>
+                        <li>
+                            <a href="/teachcer/calendar/classlist">Running Classes</a>
+                        </li>
+                        <li>
+                            <a href="/teachcer/calendar/allclasslist">All Classes</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#yogaSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Yoga Asana</a>
+                    <ul class="collapse list-unstyled" id="yogaSubmenu">
+                        <li>
+                            <a href="/teacher/yogadictionary">Yoga Dictionary</a>
+                        </li>
+                        <li>
+                            <a href="/teacher/yogadictionary/create/yogasequences">Create Sequences</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="/teacher/favourite">Fav YogaAsana</a>
+                </li>
+                <li>
+                    <a href="/teacher/setting">Settings</a>
+                </li>
+                <li>
+                    <a href="/logout1">Logout</a>
+                </li>
+            </ul>
+        </nav>
+        {% endblock %}
+
+
+        <div id="content" class="container-fluid" style="height:100%!important">
+            
+            <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+                <div class="container-fluid" style="height:25px !important;">
+                    <button type="button" id="sidebarCollapse" class="btn btn-success">
+                        <i class="fa fa-bars fas fa-align-left"></i>
+                        <span>Menu</span>
+                    </button>
+                    <div style="float: right;">Hi, {{ request.session.username }}</div>
+                </div>
+            </nav>
+
+            {% block content %}
+        
+            {% endblock content %}
+
+        </div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+    });
+
+    setTimeout(function(){
+        if($('#msg').length>0)
+        {
+            $('#msg').remove();
+        }
+    },2000)
+
+</script>
+</body>
+
+</html>
+
+

@@ -1,0 +1,49 @@
+{% extends 'studentbase.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+
+    .top-right {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: green;
+        color : white;
+        padding-left: 20px;
+        padding-right: 20px
+      }
+
+</style>
+
+
+    <div class="container">
+        <div class="row">
+            {% for class_obj in class_objs %}
+                    <div class="col-md-3" style="height:100%; padding: 05px !important;">
+                        <div class="card " style="margin: 10px; height:90%;">
+                            <img class="card-img-top" src = "{{ class_obj.image_thumbnail.url }}" alt="card image cap">
+                            {% for book in booked %}
+                                {% if book.yoga_class == class_obj %}
+                                    <div class="top-right">Booked</div>
+                                {% endif %}
+                            {% endfor %}
+                            <div class="card-body" style="text-aligh:center;">
+                                <a id="{{ class_obj.id }}" value="{{ class_obj.id }}" href="{% url 'class_detail' class_obj.id %}">
+                                    <h4>{{ class_obj.title }}</h4> By<h4>{{ class_obj.owner }}</h4>
+                                    <p>{{ class_obj.start_time }}</p>
+                                    <p>{{ class_obj.end_time }}</p>
+                                </a>
+                        </div>
+                        </div>
+                    </div>
+            {% endfor %}
+        </div>
+    </div> 
+
+
+{% endblock content %}
+

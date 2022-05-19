@@ -1,0 +1,69 @@
+{% extends 'teacherbase.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.js"></script>
+
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+        $('#sampleTable').DataTable();
+    });
+
+</script>
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <div class="tile-body">
+                <div class="table-responsive">
+                    <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-hover table-bordered dataTable no-footer" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="sorting_asc" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 100px;">SL</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 300px;">Event Name</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 150px;">Start Time</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 150px;">End Time</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 113px;">Attendee</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="text-align:center;">View</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="">Update</th>
+                                                <th class="sorting" tabindex="0" aria-controls="sampleTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="">Remove</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for d in data %}
+                                        <tr role="row" class="odd">
+                                            <td class="sorting_1">{{ forloop.counter }}</td>
+                                            <td>{{ d.title }}</td>
+                                            <td>{{ d.start_time }}</td>
+                                            <td>{{ d.end_time }}</td>
+                                            <td><a href="{% url 'classattendee' d.id %}" class="mx-2" style="color:blue; border-button:1px solid blue;">{{ d.attendee }}</a></td>
+                                            <td><a href="{% url 'classeview' d.id %}" class="mx-2 text-success" style=""><i class="fa fa-eye"></i></a></td>
+                                            <td><a href="{% url 'class_edit' d.id %}" class="mx-2 text-info" style=""><i class="fa fa-pencil-square-o" aria-hidden></i></a></td>
+                                            <td><a href="{% url 'classdelete' d.id %}" class="mx-2 text-danger" style=""><i class="fa fa-trash" aria-hidden></i></a></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+
+
+
