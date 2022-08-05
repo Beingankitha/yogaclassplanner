@@ -6,7 +6,7 @@ from urllib import request
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.urls import reverse
 from users.models import WebsiteUser, MedicalInformation
-from classcalendar.models import YogaClass, YogaAsanaSequence, ClassMember
+from classcalendar.models import YogaClass, ClassMember
 from yogas.models import Asana, YogaImage, YogaDificulty, YogaPosition, YogaType, favouriteAsana
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -17,9 +17,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy, reverse
 
-# import numpy as np
-# import cv2
- 
 
 # Create your views here.
 def teacherdash(request):
@@ -100,14 +97,21 @@ def tyogadictionary(request):
         sys_asan_Set = set()
         for asanausr in asanas_usr:
             users_asan_Set.add(asanausr.asana_name)
+        
+        print(len(users_asan_Set))
         for asnaaa_ in asanas_sys:
             sys_asan_Set.add(asnaaa_.asana_name)
+        print(len(sys_asan_Set))
+        
         for asnaaa in asanas_sys:
             if asnaaa.asana_name in users_asan_Set:
-                # print("is innnn ")
+                
                 for asanausrr in asanas_usr:
-                    if asnaaa.asana_name == asanausrr.asana_name:
+                    # print("users asn is innnn ")
+                    if asnaaa.asana_name == asanausrr.asana_name and asnaaa.created_by != asanausr.created_by:
                         asanas_final.append(asanausrr)
+                    else:
+                        pass
             else:
                 # print("is ")
                 asanas_final.append(asnaaa)
@@ -116,6 +120,9 @@ def tyogadictionary(request):
             if asnaaa_u.asana_name not in sys_asan_Set:
                 # print("No in")
                 asanas_final.append(asnaaa_u)   
+                
+                
+        print(len(asanas_final))
         
         
         
@@ -231,7 +238,7 @@ def tyogadictionary(request):
                 return render(request,"tyogadictionary.html", context)
             
             else:
-                asanas = Asana.objects.all()    
+                asanas = asanas_final    
         
         paginator = Paginator(asanas, per_page=8)
         page_number = request.GET.get('page', 1)
@@ -270,6 +277,7 @@ def yoga_detail(request,id):
 def addyogaasana(request):
     if request.session.get("useremail") is not None:
         if request.method == "GET":
+            
             lev = YogaDificulty.objects.all()
             pos = YogaPosition.objects.all()
             typ = YogaType.objects.all()
@@ -295,11 +303,11 @@ def addyogaasana(request):
             
             files = request.FILES.getlist('inputFiles[]')         
             
-            images  = files
-            print(files)
+            images  = files            
             
             
-            data = Asana.objects.all().filter(asana_name=yoga_name)
+            data = Asana.objects.all().filter(asana_name=yoga_name).filter(created_by = request.session.get("useremail"))
+            
             
             if data:
                 messages.error(request,"Yoga Asana already existed in system...!!")
@@ -342,22 +350,6 @@ def addyogaasana(request):
                     
     else:
         return redirect("/userlogin")
-    
-    # if request.method=='POST':
-    #     form =  YogaImageForm(request.POST or None, request.FILES or None)
-    #     files = request.FILES.getlist('image')
-    #     if form.is_valid():
-    #         yogaasana = form.save(commit=False)
-    #         yogaasana.save()
-    #         if files:
-    #             for f in files:
-    #                 YogaImage.objects.create(asana=yogaasana,image=f)
-    #             redirect('/system/yogadictionary')
-    # else:
-    #     form = YogaImageForm()
-    #     image_form = 
-    #     context = {'form':form}
-    #     return render(request,"addyogaasana.html", context)
     
 def edit_data(request, id):
     if request.session.get("useremail") is not None:        
@@ -451,6 +443,27 @@ def edit_data(request, id):
     else:
         return redirect("/userlogin")
     
+def tyogasequences_detail(request):
+    if request.session.get("useremail") is not None:        
+        if request.method == "GET":
+            lev = request.GET.get('level')
+            pos = request.GET.get('position')
+            typ = request.GET.get('type')
+            mus = request.GET.get('muscle')
+        
+        user = WebsiteUser.objects.get(email=request.session.get("useremail"))
+        lev = YogaDificulty.objects.all()
+        pos = YogaPosition.objects.all()
+        typ = YogaType.objects.all()  
+        data = YogaClass.objects.filter(owner = user, start_time__gte=datetime.datetime.now()).order_by('start_time')
+        print(data)
+        context = {'level':lev,'pos':pos,'type':typ , 'yogaclass' : data}
+        return render(request,"tyogasequencesques.html", context)
+        
+    else:
+        return redirect("/userlogin")
+    
+    
 def tyogasequences(request):
     if request.session.get("useremail") is not None:
         asanas = Asana.objects.all()
@@ -484,26 +497,8 @@ def tyogasequences(request):
         level = YogaDificulty.objects.all()
         position = YogaPosition.objects.all()
         type_ = YogaType.objects.all()
-        
-        if request.method == "GET":
-            
-            lev = request.GET.get('level')
-            pos = request.GET.get('position')
-            typ = request.GET.get('type')
-            mus = request.GET.get('muscle')
-            
-        sugg_yoga = []
-        
-        # meds_info = MedicalInformation.  
-        user = WebsiteUser.objects.get(email=request.session.get("useremail"))
-        lev = YogaDificulty.objects.all()
-        pos = YogaPosition.objects.all()
-        typ = YogaType.objects.all()  
-        data = YogaClass.objects.filter(owner = user, start_time__gte=datetime.datetime.now()).order_by('start_time')
-        print(data)
-        context = {'level':lev,'pos':pos,'type':typ , 'yogaclass' : data}
-        return render(request,"tyogasequencesques.html", context)
-        
+        context = {'asanas':asanas}
+        return render(request,"tyogasequences.html", context)
     else:
         return redirect("/userlogin")
     

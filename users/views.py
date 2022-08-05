@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,HttpResponse
-from .models import WebsiteUser, CustomeUser
+from .models import WebsiteUser
 from django.contrib import messages
 from django.utils import timezone
 from django.conf import settings
@@ -14,11 +14,9 @@ from django.core.mail import EmailMessage
 import uuid
 
 
-# Create your views here.
 def index(request):
 		return render(request,"index.html")
 
-# user registion
 def userregister(request):
 		return render(request,"register.html")
 
@@ -67,15 +65,15 @@ def save_data(request):
             html_message = render_to_string("user_activate_email.html", {
                 'user': fullname,
                 'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.uuid)),
+                'uid': urlsafe_base64_encode(force_bytes(user.id)),
                 'token':account_activation_token.make_token(user),
             })
             to_email = email
             email = EmailMessage(mail_subject,html_message, to=[to_email])
             email.send()
-            recipient_list = [email, ]
-            email_from = settings.EMAIL_HOST_USER
-            send_mail( mail_subject, html_message, email_from, recipient_list )
+            # recipient_list = [email, ]
+            # email_from = settings.EMAIL_HOST_USER
+            # send_mail( mail_subject, html_message, email_from, recipient_list )
             messages.success(request,"Register Sucessfully Completed")
             messages.error(request,"Please confirm your email address to complete the registration")
             return render(request,"login.html")
@@ -89,7 +87,7 @@ def save_data(request):
 def activate(request, uidb64, token):
     try:
         uuid = force_str(urlsafe_base64_decode(uidb64))
-        user = WebsiteUser.objects.get(uuid=uuid)
+        user = WebsiteUser.objects.get(id=uuid)
     except(TypeError, ValueError, OverflowError, WebsiteUser.DoesNotExist):
         user = None
     if user is not None and account_activation_token.check_token(user, token):

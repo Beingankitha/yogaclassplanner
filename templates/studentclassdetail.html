@@ -57,9 +57,9 @@
             
         </div>
         <div class="col-md-6 text-right">
-            {% if booked == "booked" %}
+            {% if booked %}
 
-            <a href="{% url 'classbooked' class_obj.id %}" class="btn btn-success" style="float:right; margin:7px;"> Cancel Booking</a>
+            <a href="{% url 'classbookeddeleted' class_obj.id %}" class="btn btn-success" style="float:right; margin:7px;"> Cancel Booking</a>
 
             {% else  %}
 

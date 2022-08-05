@@ -157,7 +157,7 @@ input.submit {
                 <div class="card">
                   <img class="" src = "{{ asan.image_thumbnail.url }}" alt="card image cap" style="object-fit:contain; width:200px; height:200px; border: 1px #CCC">
                   <div class="card-body">
-                    <a id="{{ asan.id }}" value="{{ asan.id }}" href="{% url 'yogaasan_detail' slug=asan.slug %}">
+                    <a id="{{ asan.id }}" value="{{ asan.id }}" href="{% url 'yogaasan_detail' asan.id %}">
                     <h4>{{ asan.asana_name }}</h4>
                     <p>{{ asan.asana_sanscrut_name }}</p>
                     </a>

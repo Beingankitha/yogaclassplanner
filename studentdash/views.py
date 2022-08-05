@@ -9,7 +9,7 @@ from yogas.models import Asana, AsanaImages, YogaImage, YogaDificulty, YogaPosit
 from users.models import WebsiteUser, MedicalInformation
 from django.core.paginator import Paginator
 from django.contrib import messages
-from classcalendar.models import YogaClass, YogaAsanaSequence, ClassMember
+from classcalendar.models import YogaClass, ClassMember
 
 # Create your views here.
 
@@ -266,7 +266,8 @@ def is_valid_query_param(param):
 
 def yogadictionary(request):
     if request.session.get("useremail") is not None:
-        asanas = Asana.objects.all()
+        asanas = Asana.objects.filter(created_by = "system")
+        print(len(asanas))
         level = YogaDificulty.objects.all()
         position = YogaPosition.objects.all()
         type = YogaType.objects.all()
@@ -385,7 +386,7 @@ def yogadictionary(request):
                 return render(request,"yogadictionary.html", context)
             
             else:
-                asanas = Asana.objects.all()    
+                asanas = Asana.objects.filter(created_by="system")    
         
         paginator = Paginator(asanas, per_page=8)
         page_number = request.GET.get('page', 1)
@@ -408,7 +409,7 @@ def studentclasses(request):
     if request.session.get("useremail") is not None:
         
         class_event = []
-        class_objs = YogaClass.objects.all()
+        class_objs = YogaClass.objects.filter(start_time__gte=datetime.now()).order_by('start_time')
         for cls in class_objs:
             class_event.append(
                 {
@@ -430,7 +431,6 @@ def studentbookclass(request):
         class_objs = YogaClass.objects.all().filter(start_time__gte=datetime.now()).order_by('start_time')
         user = WebsiteUser.objects.get(email=request.session.get("useremail"))
         booked = ClassMember.objects.filter(student = user)
-        print(booked)
         context = { 'class_objs' : class_objs , 'booked':booked,}
         return render(request,"studentbookclass.html", context)
     else:
@@ -439,7 +439,9 @@ def studentbookclass(request):
 def class_detail(request, id):
     if request.session.get("useremail") is not None:
         class_obj = YogaClass.objects.get(id = id)
-        context = { 'class_obj' : class_obj, 'booked':"unbooked" }
+        user = WebsiteUser.objects.get(email=request.session.get("useremail"))
+        booked = ClassMember.objects.filter(yoga_class = class_obj,student = user)
+        context = { 'class_obj' : class_obj, 'booked':booked, }
         return render(request,"studentclassdetail.html", context)
     else:
         return redirect("/userlogin")
@@ -448,8 +450,11 @@ def classbooked(request, id):
     if request.session.get("useremail") is not None:
         user = WebsiteUser.objects.get(email=request.session.get("useremail"))
         class_obj = YogaClass.objects.get(id = id)
-        print(class_obj.owner)
         class_memebr = ClassMember.objects.filter(yoga_class=class_obj, student = user)
+        meds_obj = MedicalInformation.objects.filter(user_email = user)
+        if meds_obj:
+            messages.success(request, "Kindly please fill in medical information before booking")
+            return redirect('/studenthealth')        
         if class_memebr:
             ClassMember.objects.filter(yoga_class = class_obj, student = user).delete()
             messages.success(request, user.fullname + "had canceled booking for" + class_obj.title )
@@ -460,16 +465,26 @@ def classbooked(request, id):
             context = { 'class_obj' : class_obj, 'booked':"booked" }
             return render(request,"studentclassdetail.html", context)
     else:
-        return redirect("/userlogin")    
-
+        return redirect("/userlogin")  
     
-def yogaasan_detail(request,slug):
+def classbookeddeleted(request,id):
     if request.session.get("useremail") is not None:
-        asana = Asana.objects.get(asana_name=slug)
-        asana_images = AsanaImages.objects.filter(asana_id=asana.id)
+        user = WebsiteUser.objects.get(email=request.session.get("useremail"))
+        class_obj = YogaClass.objects.get(id = id)
+        class_memebr = ClassMember.objects.get(yoga_class=class_obj, student = user)
+        name = class_obj.title.title()
+        class_memebr.delete()
+        messages.success(request, "Booking of "+ name + " deleted successfully ")
+        return redirect("/studentbookclass")
+    else:  
+        return redirect("/userlogin")
+    
+def yogaasan_detail(request,id):
+    if request.session.get("useremail") is not None:
+        asana = Asana.objects.get(id=id)
         yoga_images = YogaImage.objects.filter(asana_id=asana.id)
         
-        context = {'asana':asana, 'yoga_images':yoga_images, 'asana_images':asana_images}         
+        context = {'asana':asana, 'yoga_images':yoga_images}         
         return render(request,"yogaasan_detail.html", context)
     else:
         return redirect("/userlogin")

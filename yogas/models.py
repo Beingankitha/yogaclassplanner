@@ -5,6 +5,8 @@ from django.utils import timezone
 from PIL import Image
 from django.utils.text import slugify
 from users.models import WebsiteUser
+from classcalendar.models import YogaClass
+
 
 class YogaDificulty(models.Model):
     difficulty_name = models.CharField(max_length=200, db_index=True, unique=True)
@@ -61,7 +63,7 @@ class Asana(models.Model):
         self.slug = slugify(self.asana_name)
         super(Asana, self).save(*args, **kwargs)  # saving image first
         img = Image.open(self.image_thumbnail.path) # Open image using self
-        if img.height > 500 or img.width > 400:
+        if img.height > 400 or img.width > 400:
             new_img = (400, 300)
             img.thumbnail(new_img)
             img.save(self.image_thumbnail.path) 
@@ -110,7 +112,7 @@ class YogaAsanaSequence(models.Model):
     seq_difficulty = models.ForeignKey(YogaDificulty,on_delete=models.CASCADE,default=None, null=True)
     seq_asana = models.ForeignKey(Asana, on_delete=models.CASCADE,default=None, null=False,blank=False, related_name="Yoga")
     seq_asana_num = models.IntegerField(default=None, null=False,blank=False)
-    
+    yoga_class = models.ForeignKey(YogaClass,on_delete=models.CASCADE,default=None, null=False,blank=False)
     class Meta:
         ordering = ['id','seq_name',]
     
@@ -122,3 +124,4 @@ class favouriteAsana(models.Model):
     user = models.ForeignKey(WebsiteUser, on_delete=models.CASCADE,default=None, null=False,blank=False)
     class Meta:
         unique_together = ['asan','user']
+    

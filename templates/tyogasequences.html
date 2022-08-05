@@ -129,8 +129,7 @@ input.submit {
 
 <div class="col row" style="height:40px;float:right">
     <form>
-        <label>Enter Sequences Name:</label>
-            <input type="text" name ="seq_name" required style="">
+        
             <input type="button" class="btn btn-success" value="Save">
     </form>
 </div>
@@ -186,10 +185,10 @@ input.submit {
             <div class="grid-container">
                 {% for asan in asanas %}
                         <div class="card border-top-0 dragtarget" style=" padding: 05px !important;width:8rem;height:13rem;" id="{{ asan.id }}" draggable="true">
-                            <a href="{% url 'edit_data' slug=asan.slug %}"  class="mx-2"><i class="fa fa-pencil-square-o"></i></a>
+                            <a href="{% url 'edit_data' asan.id %}"  class="mx-2"><i class="fa fa-pencil-square-o"></i></a>
                                 <img class="card-img-top "  class="" src = "{{ asan.image_thumbnail.url }}" id="{{ asan.id }}" alt="card image cap" style="object-fit:cover;">
                                 <div class="card-body" style="text-aligh:center;">
-                                    <a id="{{ asan.id }}" class="draggable" value="{{ asan.id }}" href="{% url 'yoga_detail' asan.slug %}" draggable="true">
+                                    <a id="{{ asan.id }}" class="draggable" value="{{ asan.id }}" href="{% url 'yoga_detail' asan.id %}" draggable="true">
                                     <center><h6 >{{ asan.asana_name }}</h6></center>
                                     </a>
                                 </div>

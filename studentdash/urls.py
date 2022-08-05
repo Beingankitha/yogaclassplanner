@@ -18,5 +18,6 @@ urlpatterns = [
     path('studentbookclass',views.studentbookclass,name="studentbookclass"),
     path('studentbookclass/class_detail/<int:id>',views.class_detail,name="class_detail"),
     path('classbooked/<int:id>/',views.classbooked,name="classbooked"),
-    path('yogadictionary/<slug:slug>/',views.yogaasan_detail, name="yogaasan_detail"),
+    path('classbooked/delete/<int:id>/',views.classbookeddeleted,name="classbookeddeleted"),
+    path('yogadictionary/<int:id>/',views.yogaasan_detail, name="yogaasan_detail"),
 ]

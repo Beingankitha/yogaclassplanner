@@ -29,7 +29,7 @@ def calendar_view(request):
             
             user = WebsiteUser.objects.get(email=request.session.get("useremail"))
             
-            data = YogaClass.objects.filter(owner = user, start_time=start_time)
+            data = YogaClass.objects.filter(owner = user, start_time__gte=datetime.datetime.now()).order_by('start_time')
         
             if data :
                 class_event = []
@@ -62,7 +62,7 @@ def calendar_view(request):
                 
                 class_event = []
                 user = WebsiteUser.objects.get(email=request.session.get("useremail"))
-                class_objs = YogaClass.objects.all().filter(owner = user)
+                class_objs = YogaClass.objects.all().filter(owner = user, start_time__gte=datetime.datetime.now()).order_by('start_time')
                 for cls in class_objs:
                     class_event.append(
                         {
@@ -81,7 +81,7 @@ def calendar_view(request):
         else:
             class_event = []
             user = WebsiteUser.objects.get(email=request.session.get("useremail"))
-            class_objs = YogaClass.objects.all().filter(owner = user)
+            class_objs = YogaClass.objects.all().filter(owner = user, start_time__gte=datetime.datetime.now()).order_by('start_time')
             for cls in class_objs:
                 class_event.append(
                     {

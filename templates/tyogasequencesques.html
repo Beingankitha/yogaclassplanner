@@ -17,7 +17,7 @@
 
 <div class="col row" style="height:40px;float:right">
     <form>
-        <label>Select if you want to create Sequences based on your choosen data. </label><br/><br>
+        <label>Select if you want to create Sequences based on your choosen data. </label>
         <form method="get" action="" id="search_form">
             <br/><label>Yoga Levels</label>
             <input list="level" class="form-control" name="level" placeholder="Yoga Levels">
@@ -68,7 +68,9 @@
             {% endfor %}
         </select>
         <br/>  
-        <input type="button" class="btn btn-success" value="Next">
+        <label>Enter Sequences Name:</label>
+        <input type="text" name ="seq_name" class="form-control" required style=""><br/>
+        <a href="/teacher/yogadictionary/yogasequences/create" class="btn btn-success">Next</a>
 
 
     </form>

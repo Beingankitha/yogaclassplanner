@@ -7,8 +7,7 @@ from os.path import isfile, join
 from django.contrib.staticfiles.storage import staticfiles_storage
 
 def add_images(request):
-    mypath = "/home/ankita/wc1/code/trunk/yogaclassplanner/static/images/yogas/"
-    
+    mypath = "/home/ankita/wc1/code/trunk/yogaclassplanner/media/images/yogas/"
     onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 
     asanas = Asana.objects.all()

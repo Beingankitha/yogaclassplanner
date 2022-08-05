@@ -52,7 +52,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django_session_timeout.middleware.SessionTimeoutMiddleware',
+    #'django_session_timeout.middleware.SessionTimeoutMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -78,7 +78,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'yogaclassplanner.wsgi.application'
+#WSGI_APPLICATION = 'yogaclassplanner.wsgi.application'
 
 
 # Database
@@ -140,13 +140,13 @@ USE_I18N = True
 
 USE_TZ = True
 
-SESSION_COOKIE_AGE = 3600
+#SESSION_COOKIE_AGE = 3600
 
-SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+#SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
 
-SESSION_EXPIRE_AFTER_LAST_ACTIVITY_GRACE_PERIOD = 60
+#SESSION_EXPIRE_AFTER_LAST_ACTIVITY_GRACE_PERIOD = 60
 
-SESSION_TIMEOUT_REDIRECT = '/userlogin'
+#SESSION_TIMEOUT_REDIRECT = '/userlogin'
 
 
 # Static files (CSS, JavaScript, Images)

@@ -14,7 +14,8 @@ urlpatterns = [
 	path('teacher/yogadictionary/edit/<int:id>',views.edit_data, name="edit_data"),
 	path('teacher/yogadictionary/fav/<int:id>',views.fav_asan, name="fav_asan"),
 	path('teacher/favourite',views.fav_asan_display, name="fav_asan_display"),
-	path('teacher/yogadictionary/create/yogasequences',views.tyogasequences, name="tyogasequences"),
+	path('teacher/yogadictionary/yogasequences/detail',views.tyogasequences_detail, name="tyogasequences_detail"),
+	path('teacher/yogadictionary/yogasequences/create',views.tyogasequences, name="tyogasequences"),
  
 ]
 
